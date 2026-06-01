@@ -1745,13 +1745,13 @@
             event.currentTarget.classList.add('active');
         }
 
-        function exportAllToPDF() {
-            // 彈出提示，引導學生如何儲存
-            alert("即將為您整合所有課題。\n請在彈出的列印視窗中，將「目的地 / Destination」選擇為「另存為 PDF / Save as PDF」，然後點擊儲存即可！");
-    
-            // 觸發瀏覽器的列印與 PDF 儲存引擎
-            window.print();
-        }
+    	function exportAllToPDF() {
+   			// 彈出提示，引導學生如何儲存
+    		alert("即將為您整合所有課題。\n請在彈出的列印視窗中，將「目的地 / Destination」選擇為「另存為 PDF / Save as PDF」，然後點擊儲存即可！");
+
+    		// 🛑 核心指令：觸發瀏覽器的列印與預覽視窗
+    		window.print(); 
+		}
 
         // 網頁載入時預設打開特定分頁 (方便檢視本次更新)
         document.getElementById("defaultOpen").click();
