@@ -1,0 +1,1691 @@
+<!DOCTYPE html>
+<html lang="zh-HK">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>中一數學温習網 - 基礎運算與有向數</title>
+    
+    <script>
+        MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            }
+        };
+    </script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #0056b3;
+            --secondary-color: #f8f9fa;
+            --text-color: #333;
+            --accent-color: #ffc107;
+            --card-bg: #ffffff;
+        }
+        body {
+            font-family: "Segoe UI", "Microsoft JhengHei", sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: #e9ecef;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+        }
+        
+        /* 分頁導覽列樣式 */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            background-color: #343a40;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .tab-btn {
+            background: none;
+            border: none;
+            color: #rgba(255,255,255,0.7);
+            color: #b8c2cc;
+            font-size: 1.1rem;
+            font-weight: bold;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin: 0 10px;
+            border-radius: 4px;
+        }
+        .tab-btn:hover {
+            color: white;
+            background-color: rgba(255,255,255,0.1);
+        }
+        .tab-btn.active {
+            color: white;
+            background-color: var(--primary-color);
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            padding: 0 20px;
+        }
+        
+        /* 內容分頁隱藏/顯示 */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        .card h2 {
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .card h3 {
+            color: #495057;
+            margin-top: 20px;
+        }
+        .highlight {
+            background-color: #fff3cd;
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .example-box {
+            background-color: var(--secondary-color);
+            border-left: 4px solid var(--accent-color);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 0 4px 4px 0;
+        }
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #343a40;
+            color: white;
+            margin-top: 40px;
+        }
+        table.math-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        table.math-table th, table.math-table td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        table.math-table th {
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>中一數學温習網</h1>
+        <p>自我增值・輕鬆應試</p>
+    </header>
+
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="switchTab('topic1')">課題一：基礎運算</button>
+        <button class="tab-btn" onclick="switchTab('topic2')">課題二：有向數</button>
+        <button class="tab-btn" onclick="switchTab('topic3')">課題三：代數簡介</button>
+        <button class="tab-btn" onclick="switchTab('topic4')">課題四：一元一次方程</button>
+        <button class="tab-btn" onclick="switchTab('topic5')">課題五：近似值與估算</button>
+        <button class="tab-btn" onclick="switchTab('topic6')">課題六：多項式的運算</button>
+        <button class="tab-btn" onclick="switchTab('topic7')">課題七：與直線和三角形相關的角</button>
+        <button class="tab-btn" onclick="switchTab('topic8')">課題八：面積與體積(一)</button>
+        <button class="tab-btn" onclick="switchTab('topic9')">課題九：坐標簡介</button>
+        <button class="tab-btn" onclick="switchTab('topic-vocab')">英文詞語温習：配對遊戲</button>
+    </div>
+
+    <div class="container">
+        
+        <div id="topic1" class="tab-content active">
+            <div class="card">
+                <h2>1. 四則運算的技巧</h2>
+                <p>在進行加、減、乘、除的混合運算時，必須遵守 <strong>BODMAS</strong> (先乘除後加減) 的規則：</p>
+                <ul>
+                    <li><strong>B</strong>rackets (括號)：先計括號。</li>
+                    <li><strong>O</strong>rders (指數/次方的運算)。</li>
+                    <li><strong>DM</strong> (乘除)：由左至右計算。</li>
+                    <li><strong>AS</strong> (加減)：最後由左至右計算。</li>
+                </ul>
+                <div class="example-box">
+                    <strong>例子：</strong> 計算 $12+4\times(6-2)$<br><br>
+                    步驟 1 (括號)： $12+4\times 4$<br>
+                    步驟 2 (乘法)： $12+16$ <br>
+                    步驟 3 (加法)： <span class="highlight">$28$</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>2. 通分母技巧 (分數加減)</h2>
+                <p>進行分數的加法或減法時，如果分母不同，必須先找出分母的<strong>最小公倍數 (LCM)</strong> 進行通分母。</p>
+                <div class="example-box">
+                    <strong>例子：</strong> 計算 $\frac{1}{4}+\frac{1}{6}$<br><br>
+                    步驟 1：找分母 $4$ 和 $6$ 的 LCM。$LCM(4, 6) = 12$。<br>
+                    步驟 2：擴分使分母變成 $12$。<br>
+                    $$ \frac{1\times 3}{4\times 3} = \frac{3}{12} $$
+                    $$ \frac{1\times 2}{6\times 2} = \frac{2}{12} $$
+                    步驟 3：分子相加。<br>
+                    $$ \frac{3}{12}+\frac{2}{12} = \frac{5}{12} $$
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>3. 質因數連乘式 (Index Notation)</h2>
+                <p>每一個合成數都可以寫成幾個質數相乘的結果。相同的質因數可以用「指數」來表示，並由小至大排列。</p>
+                <p>常見的質數有：$2, 3, 5, 7, 11, 13, \dots$</p>
+                <div class="example-box">
+                    <strong>例子：</strong> 將 $72$ 寫成質因數連乘式。<br><br>
+                    $$ 
+                    \begin{aligned}
+                    72 &= 2\times 36 \\
+                    &= 2\times 2\times 18 \\
+                    &= 2\times 2\times 2\times 9 \\
+                    &= 2\times 2\times 2\times 3\times 3
+                    \end{aligned}
+                    $$
+                    使用指數表示：<span class="highlight">$72=2^3\times 3^2$</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>4. 2數或3數的 HCF 及 LCM</h2>
+                
+                <h3>方法一：短除法 (Short Division)</h3>
+                <div class="example-box">
+                    求 $24$ 和 $36$ 的 HCF 和 LCM：<br>
+                    $$
+                    \begin{array}{c|cc}
+                    2 & 24 & 36 \\
+                    \hline
+                    2 & 12 & 18 \\
+                    \hline
+                    3 & 6 & 9 \\
+                    \hline
+                    & 2 & 3
+                    \end{array}
+                    $$
+                    <ul>
+                        <li><strong>HCF (最大公因數)</strong> = 左側除數相乘 = $2\times 2\times 3 = 12$</li>
+                        <li><strong>LCM (最小公倍數)</strong> = 左側除數 $\times$ 底部餘數 = $2\times 2\times 3\times 2\times 3 = 72$</li>
+                    </ul>
+                </div>
+
+                <h3>方法二：質因數連乘法</h3>
+                <ul>
+                    <li><strong>求 HCF：</strong> 抽「相同」的底數，揀「<strong>最小</strong>」的次方。</li>
+                    <li><strong>求 LCM：</strong> 抽「所有」出現過的底數，揀「<strong>最大</strong>」的次方。</li>
+                </ul>
+                <div class="example-box">
+                    <strong>例子：</strong> 設 $A = 2^3\times 3^2\times 5$，$B = 2^2\times 3^4\times 7$<br><br>
+                    $$ HCF = 2^2\times 3^2 = 36 $$
+                    $$ LCM = 2^3\times 3^4\times 5\times 7 = 22680 $$
+                </div>
+            </div>
+        </div>
+
+
+        <div id="topic2" class="tab-content">
+            <div class="card">
+                <h2>1. 正負數概念 (相反數)</h2>
+                <p>有向數用來表示具有相反性質的量（例如：賺錢與虧蝕、上升與下降）。</p>
+                <ul>
+                    <li><strong>正數 (+)：</strong> 大於 $0$ 的數，如 $+5$、$+2.5$（通常可省略 $+$ 號）。</li>
+                    <li><strong>負數 (-)：</strong> 小於 $0$ 的數，如 $-3$、$-\frac{1}{2}$（$-$ 號不可省略）。</li>
+                </ul>
+                <h3>相反數 (Opposite Numbers)</h3>
+                <p>在數線上與原點（$0$）距離相等，但方向相反兩個數。把它們相加的結果必為 $0$。</p>
+                <div class="example-box">
+                    <strong>例子：</strong><br>
+                    $+7$ 的相反數是 $-7$。<br>
+                    $-2.8$ 的相反數是 $+2.8$。<br>
+                    恆等式關係：$a + (-a) = 0$
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>2. 數線 (Number Line)</h2>
+                <p>數線是一條向兩端無限延伸的直線，用來視覺化數字的大小和位置：</p>
+                $$ \longleftarrow \quad -3 \quad\quad -2 \quad\quad -1 \quad\quad 0 \quad\quad +1 \quad\quad +2 \quad\quad +3 \quad \longrightarrow $$
+                <ul>
+                    <li><strong>原點：</strong> 數字 $0$ 的位置。</li>
+                    <li><strong>方向：</strong> 越往<strong>右</strong>邊的數值越<strong>大</strong>；越往<strong>左</strong>邊的數值越<strong>小</strong>。</li>
+                </ul>
+                <div class="example-box">
+                    <strong>比較大小例子：</strong><br>
+                    因為 $+2$ 在 $+1$ 的右邊，所以 $+2 > +1$<br>
+                    因為 $-3$ 在 $-1$ 的左邊，所以 $-3 < -1$ <span class="highlight">（注意：負數數值越大，其值反而越小！）</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>3. 有向數四則運算</h2>
+                
+                <h3>A. 加減法（去括號口訣）</h3>
+                <p>當兩個符號碰在一起時，記住：<strong>「同號得正，異號得負」</strong></p>
+                <ul>
+                    <li>$+(+) \rightarrow +$</li>
+                    <li>$-(-) \rightarrow +$</li>
+                    <li>$+(-) \rightarrow -$</li>
+                    <li>$-(+) \rightarrow -$</li>
+                </ul>
+                <div class="example-box">
+                    <strong>例子：</strong><br>
+                    $(-3) + (+5) = -3 + 5 = 2$<br>
+                    $(-2) - (-7) = -2 + 7 = 5$<br>
+                    $(-4) - (+6) = -4 - 6 = -10$
+                </div>
+
+                <h3>B. 乘除法運算</h3>
+                <p>先判斷最終答案的正負號（同樣是同號得正，異號得負），再計算數字。</p>
+                <div class="example-box">
+                    <strong>例子：</strong><br>
+                    $(-4) \times (-3) = +(4 \times 3) = 12$ （負負得正）<br>
+                    $(-15) \div (+3) = -(15 \div 3) = -5$ （負正得負）
+                </div>
+
+                <h3>C. 包含通分母的綜合運算</h3>
+                <p>混合運算時，先處理符號，再遵循先乘除後加減（BODMAS）進行通分母計算。</p>
+                <div class="example-box">
+                    <strong>綜合挑戰題：</strong> 計算 $\left(-\frac{2}{3}\right) - \left(+\frac{1}{4}\right) \times (-2)$<br><br>
+                    $$
+                    \begin{aligned}
+                    &= \left(-\frac{2}{3}\right) - \left[\frac{1}{4} \times (-2)\right] \quad \text{(先算乘法)} \\
+                    &= \left(-\frac{2}{3}\right) - \left(-\frac{2}{4}\right) \\
+                    &= -\frac{2}{3} + \frac{1}{2} \quad \text{(去括號：負負得正，並約分)} \\
+                    &= -\frac{4}{6} + \frac{3}{6} \quad \text{(通分母，LCM = 6)} \\
+                    &= \frac{-4 + 3}{6} \\
+                    &= -\frac{1}{6}
+                    \end{aligned}
+                    $$
+                </div>
+            </div>
+        </div>
+
+        <div id="topic3" class="tab-content">
+            <div class="card">
+                <h2>1. 列式的技巧 (Algebraic Expressions)</h2>
+                <p>代數就是用「英文字母」來代表未知的數字。我們需要將文字描述翻譯成數學算式：</p>
+                <table class="math-table">
+                    <tr>
+                        <th>文字描述 (關鍵字)</th>
+                        <th>數學符號</th>
+                        <th>例子</th>
+                        <th>代數式</th>
+                    </tr>
+                    <tr>
+                        <td>和 (Sum)、加上、多於</td>
+                        <td>$+$</td>
+                        <td>$x$ 與 $5$ 的和</td>
+                        <td>$x + 5$</td>
+                    </tr>
+                    <tr>
+                        <td>差 (Difference)、減去、少於</td>
+                        <td>$-$</td>
+                        <td>$y$ 減去 $2$</td>
+                        <td>$y - 2$</td>
+                    </tr>
+                    <tr>
+                        <td>積 (Product)、乘、倍</td>
+                        <td>$\times$ 或 緊貼</td>
+                        <td>$a$ 的 $4$ 倍</td>
+                        <td>$4a$</td>
+                    </tr>
+                    <tr>
+                        <td>商 (Quotient)、除以、每</td>
+                        <td>$\div$ 或 分數</td>
+                        <td>$p$ 除以 $q$</td>
+                        <td>$\frac{p}{q}$</td>
+                    </tr>
+                </table>
+                <div class="example-box">
+                    <strong>綜合例子：</strong><br>
+                    「$x$ 的 $3$ 倍與 $y$ 的和」 $\rightarrow$ $3x + y$<br>
+                    「$m$ 與 $n$ 的差除以 $5$」 $\rightarrow$ $\frac{m - n}{5}$
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>2. 公式與代入法 (Substitution)</h2>
+                <p><strong>代入法口訣：</strong>「將未知數變成括號，放入數字，按計算機。」<br>
+                加上括號可以避免處理負數時出錯（尤其是平方計算）。</p>
+                
+                <div class="example-box">
+                    <strong>例子 1 (正數代入)：</strong><br>
+                    已知長方形周界公式 $P = 2L + 2W$。若 $L = 5$ 且 $W = 3$，求 $P$。<br><br>
+                    步驟：將 $L$ 和 $W$ 轉成括號 $\rightarrow$ $P = 2(\quad) + 2(\quad)$<br>
+                    代入數字：<br>
+                    $$ 
+                    \begin{aligned}
+                    P &= 2(5) + 2(3) \\
+                    P &= 10 + 6 \\
+                    P &= 16
+                    \end{aligned}
+                    $$
+                </div>
+
+                <div class="example-box" style="border-left-color: #dc3545;">
+                    <strong>例子 2 (負數代入 - 常犯錯誤注意)：</strong><br>
+                    已知 $y = x^2 - 3x + 4$。若 $x = -2$，求 $y$ 的值。<br><br>
+                    代入數字 (緊記連同負號放入括號)：<br>
+                    $$ 
+                    \begin{aligned}
+                    y &= (-2)^2 - 3(-2) + 4 \\
+                    y &= 4 - (-6) + 4 \\
+                    y &= 4 + 6 + 4 \\
+                    y &= 14
+                    \end{aligned}
+                    $$
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>3. 數列 (Sequences)</h2>
+                <p>數列是按一定規律排列的一組數字。每一項我們通常用 $a_1, a_2, a_3 \dots a_n$ 來表示。</p>
+
+                <h3>3.1 觀察規律求特定項 (不求通項)</h3>
+                <p>在不需要找出通項公式的情況下，直接透過觀察圖形或數字的變化規律，推算出特定項（如第 10 項）的數值。DSE 及初中常以圖形題（如點陣圖、火柴枝）形式考核這項技巧。</p>
+                <div class="example-box">
+                    <strong>例子：觀察圖形規律</strong><br>
+                    圖 1： &#x25CF; &#x25CF; &#x25CF; （共 3 點）<br>
+                    圖 2： &#x25CF; &#x25CF; &#x25CF; &#x25CF; &#x25CF; （共 5 點）<br>
+                    圖 3： &#x25CF; &#x25CF; &#x25CF; &#x25CF; &#x25CF; &#x25CF; &#x25CF; （共 7 點）<br><br>
+                    <strong>問題：求圖 10 的點數。</strong><br><br>
+                    <strong>觀察規律：</strong><br>
+                    每個圖形都比上一個多出 2 點（即增加 2）。<br><br>
+                    <strong>推算方法：</strong><br>
+                    <strong>方法一（逐個寫出）：</strong><br>
+                    圖 4 是 9、圖 5 是 11、圖 6 是 13、圖 7 是 15、圖 8 是 17、圖 9 是 19、圖 10 是 <strong>21</strong>。<br><br>
+                    <strong>方法二（利用差距次數跳算）：</strong><br>
+                    從圖 1 到圖 10，中間經歷了 9 次「增加 2」的過程。<br>
+                    $$
+                    \begin{aligned}
+                    \text{圖 10 點數} &= \text{圖 1 點數} + (9 \times 2) \\
+                    &= 3 + 18 \\
+                    &= 21
+                    \end{aligned}
+                    $$
+                </div>
+
+                <h3>3.2 已知通項，求第 $n$ 項</h3>
+                <p>這其實就是「代入法」的應用。只需將 $n$ 代入題目給予的通項公式即可。</p>
+                <div class="example-box">
+                    <strong>例子：</strong> 已知數列的通項為 $a_n = 5n - 2$，求第 $4$ 項 ($a_4$)。<br><br>
+                    將 $n = 4$ 代入公式：<br>
+                    $$ a_4 = 5(4) - 2 $$
+                    $$ a_4 = 20 - 2 $$
+                    $$ a_4 = 18 $$
+                </div>
+
+                <h3>3.3 遞迴數列 (複雜通項求值)</h3>
+                <p>有些數列的規律是：<strong>「後面的項」由「前面的項」計算出來</strong>。<br>
+                這種題目不難，只要耐心按順序一步步推算即可。</p>
+                <div class="example-box">
+                    <strong>例子：</strong> 已知數列的第一項 $a_1 = 1$，第二項 $a_2 = 2$。其後的項滿足關係式 $a_{n+2} = a_{n+1} + a_n$。<br>
+                    求第 $4$ 項 ($a_4$) 的值。<br><br>
+                    <em>解題思路：這條公式的意思是「每一項等於前兩項相加」。</em><br><br>
+                    步驟 1 (先求第 $3$ 項)：代入 $n=1$<br>
+                    $$ a_3 = a_2 + a_1 = 2 + 1 = 3 $$
+                    <br>
+                    步驟 2 (再求第 $4$ 項)：代入 $n=2$<br>
+                    $$ a_4 = a_3 + a_2 = 3 + 2 = 5 $$
+                    <br>
+                    所以第 $4$ 項的值是 $5$。
+                </div>
+            </div>
+        </div>
+
+        <div id="topic4" class="tab-content">
+            <div class="card">
+                <h2>1. 一步方程 (One-step Equations)</h2>
+                <p>解方程的目標是把未知數（如 $x$）單獨留在等號的一邊。搬動數字跨過等號時，必須轉變成<strong>相反運算</strong>：</p>
+                <ul>
+                    <li>加變減 ($+ \rightarrow -$) ／ 減變加 ($- \rightarrow +$)</li>
+                    <li>乘變除 ($\times \rightarrow \div$ 或變分母) ／ 除/分母變乘 ($\div$ 或分母 $\rightarrow \times$)</li>
+                </ul>
+                <div class="example-box">
+                    <strong>加減例子：</strong><br>
+                    $x + 5 = 12 \quad \rightarrow \quad x = 12 - 5 \quad \rightarrow \quad x = \mathbf{7}$<br>
+                    $y - 3 = 8 \quad \rightarrow \quad y = 8 + 3 \quad \rightarrow \quad y = \mathbf{11}$
+                </div>
+                <div class="example-box">
+                    <strong>乘除例子：</strong><br>
+                    $4x = 20 \quad \rightarrow \quad x = \frac{20}{4} \quad \rightarrow \quad x = \mathbf{5}$<br>
+                    $\frac{x}{3} = 6 \quad \rightarrow \quad x = 6 \times 3 \quad \rightarrow \quad x = \mathbf{18}$
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>2. 兩步方程 (Two-step Equations)</h2>
+                <p><strong>解題口訣：</strong>「先加減，後乘除」。<br>先將遠離未知數的常數項搬到等號另一邊，再處理未知數前面的系數。</p>
+                <div class="example-box">
+                    <strong>例子：解 $2x + 1 = 13$</strong><br><br>
+                    步驟 1（先移加減）：<br>
+                    $$ 2x = 13 - 1 $$
+                    $$ 2x = 12 $$
+                    步驟 2（後移乘除）：<br>
+                    $$ x = \frac{12}{2} $$
+                    $$ x = \mathbf{6} $$
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>3. 左右方均有未知數的方程</h2>
+                <p><strong>解題口訣：</strong>「未知數搬去一邊（通常是系數較大的一邊），常數項搬去另一邊。」</p>
+                <div class="example-box">
+                    <strong>例子：解 $2x - 1 = 4x + 5$</strong><br><br>
+                    步驟 1（將 $2x$ 搬往右邊變 $-2x$，將 $+5$ 搬往左邊變 $-5$）：<br>
+                    $$ -1 - 5 = 4x - 2x $$
+                    $$ -6 = 2x $$
+                    步驟 2（兩邊除以 2）：<br>
+                    $$ \frac{-6}{2} = x $$
+                    $$ x = \mathbf{-3} $$
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>4. 需展開括號的方程</h2>
+                <p>如果方程帶有括號，必須先運用<strong>分配律 (Distribution Law)</strong> 展開括號，然後合併同類項，再進行求解。</p>
+                <div class="example-box">
+                    <strong>例子：解 $3(x - 2) = 4 - (x + 2)$</strong><br><br>
+                    步驟 1（展開括號，注意小心負號）：<br>
+                    $$ 3x - 6 = 4 - x - 2 $$
+                    步驟 2（簡化右邊的常數項）：<br>
+                    $$ 3x - 6 = 2 - x $$
+                    步驟 3（未知數搬左，常數搬右）：<br>
+                    $$ 3x + x = 2 + 6 $$
+                    $$ 4x = 8 $$
+                    步驟 4（求 $x$）：<br>
+                    $$ x = \frac{8}{4} = \mathbf{2} $$
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>5. 左右方均為分數的方程 (交叉相乘)</h2>
+                <p>當方程的形式為「分數 = 分數」時，最快的方法是使用<strong>交叉相乘 (Cross Multiplication)</strong>，將分母與對面的分子相乘，從而消去分數。</p>
+                <div class="example-box">
+                    <strong>例子：解 $\frac{x - 1}{3} = \frac{2x + 1}{5}$</strong><br><br>
+                    步驟 1（交叉相乘）：<br>
+                    $$ 5(x - 1) = 3(2x + 1) $$
+                    步驟 2（展開括號）：<br>
+                    $$ 5x - 5 = 6x + 3 $$
+                    步驟 3（移項求解）：<br>
+                    $$ -5 - 3 = 6x - 5x $$
+                    $$ \mathbf{-8 = x} \quad (\text{即 } x = -8) $$
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>6. 包含分數及整數的綜合方程</h2>
+                <p>如果方程中同時有分數和整數，最保險的方法是<strong>「全式乘以所有分母的最小公倍數 (LCM)」</strong>，這樣可以一次過把所有分母消去。</p>
+                <div class="example-box">
+                    <strong>例子：解 $\frac{x}{2} - \frac{x-1}{3} = 2$</strong><br><br>
+                    分母為 2 和 3，它們的 $LCM = 6$。我們將等號左右兩邊的<strong>每一項</strong>都乘以 6：<br><br>
+                    步驟 1（全式乘以 6）：<br>
+                    $$ 6 \times \left(\frac{x}{2}\right) - 6 \times \left(\frac{x-1}{3}\right) = 6 \times 2 $$
+                    步驟 2（約分，注意將分子看作一個整體，要加上括號）：<br>
+                    $$ 3(x) - 2(x - 1) = 12 $$
+                    步驟 3（展開括號並合併）：<br>
+                    $$ 3x - 2x + 2 = 12 $$
+                    $$ x + 2 = 12 $$
+                    步驟 4（移項）：<br>
+                    $$ x = 12 - 2 $$
+                    $$ x = \mathbf{10} $$
+                </div>
+            </div>
+        </div>
+
+        <div id="topic5" class="tab-content">
+            <div class="card">
+                <h2>1. 認識位值 (Place Value)</h2>
+                <p>在處理小數的近似值之前，我們必須清楚每一個數字所代表的「位置名稱」。以數字 <strong>3456.789</strong> 為例：</p>
+                <table class="math-table">
+                    <tr>
+                        <th>數字</th>
+                        <th>位值名稱</th>
+                        <th>數值意義</th>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>千位 (Thousands)</td>
+                        <td>$3 \times 1000$</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>百位 (Hundreds)</td>
+                        <td>$4 \times 100$</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>十位 (Tens)</td>
+                        <td>$5 \times 10$</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>個位 (Units)</td>
+                        <td>$6 \times 1$</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>十分位 (Tenths / 小數第1位)</td>
+                        <td>$7 \times \frac{1}{10}$</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td>百分位 (Hundredths / 小數第2位)</td>
+                        <td>$8 \times \frac{1}{100}$</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td>千分位 (Thousandths / 小數第3位)</td>
+                        <td>$9 \times \frac{1}{1000}$</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>2. 認識有效數字 (Significant Figures)</h2>
+                <p>有效數字用來表達一個數值的精確度。尋找有效數字的黃金法則：<strong>「由左至右，從第一個不是零的數字開始數起。」</strong></p>
+                <ul>
+                    <li><strong>夾在中間的零：</strong> 算作有效數字（例如 205 有 3 位有效數字）。</li>
+                    <li><strong>開頭的零：</strong> 不算作有效數字（例如 0.003 得 1 位有效數字）。</li>
+                    <li><strong>小數結尾的零：</strong> 算作有效數字，因為它們代表了測量的精確度（例如 4.50 有 3 位有效數字）。</li>
+                </ul>
+                <div class="example-box">
+                    <strong>例子：</strong><br>
+                    $0.045$ $\rightarrow$ <strong>2 位</strong>有效數字 (只有 4, 5)<br>
+                    $1.008$ $\rightarrow$ <strong>4 位</strong>有效數字 (1, 0, 0, 8 全部計算)<br>
+                    $0.0760$ $\rightarrow$ <strong>3 位</strong>有效數字 (7, 6, 以及最後的 0)
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>3. 計算近似值的方法</h2>
+                <p>我們最常用的有三種處理小數或整數尾數的方法：</p>
+                <ul>
+                    <li><strong>捨入 (Rounding off)：</strong> 即常說的「四捨五入」。看下一位數字，如果是 $5$ 或以上就進位，少於 $5$ 就捨去。</li>
+                    <li><strong>上捨入 (Rounding up)：</strong> 不論下一位數字是多少，只要後面有餘數，就強制進位（$+1$）。</li>
+                    <li><strong>下捨入 (Rounding down)：</strong> 不論下一位數字是多少，強制將後面的數字全部捨去。</li>
+                </ul>
+                <div class="example-box">
+                    <strong>例子：將 14.238 取近似值至小數後 1 位 (十分位)</strong><br><br>
+                    <strong>捨入 (四捨五入)：</strong> 下一位是 3 (小於 5)，所以捨去 $\rightarrow$ <strong>14.2</strong><br>
+                    <strong>上捨入：</strong> 強制進位 $\rightarrow$ <strong>14.3</strong><br>
+                    <strong>下捨入：</strong> 強制捨去 $\rightarrow$ <strong>14.2</strong>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>4. 結合現實例子的估算策略</h2>
+                <p>在日常生活中，我們不能盲目地使用四捨五入。我們需要因應實際情況，判斷應該「高估（上捨入）」還是「低估（下捨入）」。</p>
+                
+                <h3>A. 需要「高估」的情況（上捨入）</h3>
+                <p>當我們需要確保「足夠」應付開支或需求時，我們會將數值高估。</p>
+                <div class="example-box">
+                    <strong>例子：確保帶夠錢去購物</strong><br>
+                    你打算去超市買三件貨品，價格分別是 $28.2$、$41.3$ 和 $13.4$。你要準備多少錢才肯定夠？<br><br>
+                    如果用四捨五入至十位：$30 + 40 + 10 = 80$<br>
+                    但實際總價是 $82.9$，帶 80 元會<strong>不夠錢</strong>！<br><br>
+                    <strong>正確策略（上捨入至十位）：</strong><br>
+                    $28.2 \rightarrow 30$<br>
+                    $41.3 \rightarrow 50$<br>
+                    $13.4 \rightarrow 20$<br>
+                    總估算：$30 + 50 + 20 = 100$。帶 100 元就絕對安全了。
+                </div>
+
+                <h3>B. 需要「低估」的情況（下捨入）</h3>
+                <p>當我們面對「資源有限」或「安全上限」時，我們會將數值低估，確保不會超出限制。</p>
+                <div class="example-box" style="border-left-color: #dc3545;">
+                    <strong>例子：資源分配</strong><br>
+                    你帶了 100 元去買文具，每本筆記簿賣 $12.8$。你最多可以買多少本？<br><br>
+                    $$ 100 \div 12.8 = 7.8125 $$<br>
+                    如果用四捨五入，答案是 8 本。但買 8 本需要 $8 \times 12.8 = 102.4$，你的錢不夠。<br><br>
+                    <strong>正確策略（下捨入至整數）：</strong><br>
+                    不論小數點後是多少，即使是 7.9 本，你也不夠錢買第 8 本。<br>
+                    因此必須下捨入，答案是最多只能買 <strong>7 本</strong>。
+                </div>
+                <div class="example-box" style="border-left-color: #dc3545; margin-top: 15px;">
+                    <strong>例子 2：確保達到最低要求（如比賽晉級門檻）</strong><br>
+                    某個數學比賽規定，首三回合的總分必須達到 <strong>120 分</strong>才能晉級決賽。你在首三回合的得分分別是 $42.6$、$38.9$ 和 $45.2$。在不使用計算機的情況下，你確定自己能晉級嗎？<br><br>
+                    在這種情況下，我們應該把自己的分數<strong>低估（下捨入）</strong>。如果低估後的總分仍能達標，就代表實際分數一定達標，絕對安全。<br><br>
+                    <strong>策略（將分數下捨入至整數進行估算）：</strong><br>
+                    $42.6 \rightarrow 42$<br>
+                    $38.9 \rightarrow 38$<br>
+                    $45.2 \rightarrow 45$<br>
+                    低估後的總分：$42 + 38 + 45 = 125$<br><br>
+                    因為即使是低估後的總分（$125$），依然大於晉級要求（$120$），所以你可以非常肯定自己<strong>必定能晉級</strong>，而無需花時間計算精確的小數加法。
+                </div>
+            </div>
+        </div>
+
+        <div id="topic6" class="tab-content">
+            <div class="card">
+                <h2>1. 多項式的基本概念</h2>
+                <p>在學習運算前，我們必須先認識構成多項式的各個「零件」：</p>
+                <ul>
+                    <li><strong>單項式 (Monomial)：</strong> 只有數字與變數相乘的算式，例如 $5x$、$-2y^2$、$7$。</li>
+                    <li><strong>多項式 (Polynomial)：</strong> 由幾個單項式透過加號或減號連接而成，例如 $3x^2 - 4x + 1$。</li>
+                </ul>
+                <div class="example-box">
+                    <strong>例子：剖析多項式 $5x^3 - x^2y + 8$</strong><br><br>
+                    <table class="math-table">
+                        <tr>
+                            <th>概念</th>
+                            <th>說明</th>
+                            <th>在此例中的答案</th>
+                        </tr>
+                        <tr>
+                            <td><strong>項 (Terms)</strong></td>
+                            <td>多項式中被加減號隔開的部分（連同前面的正負號）</td>
+                            <td>$5x^3$、$-x^2y$、$8$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>項數 (Number of terms)</strong></td>
+                            <td>項的總數量</td>
+                            <td>$3$ 項</td>
+                        </tr>
+                        <tr>
+                            <td><strong>常數項 (Constant term)</strong></td>
+                            <td>沒有包含任何英文字母變數的項</td>
+                            <td>$8$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>係數 (Coefficient)</strong></td>
+                            <td>變數前面的數字（包含正負號）</td>
+                            <td>$x^3$ 的係數是 $5$<br>$x^2y$ 的係數是 $-1$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>項的次數 (Degree of a term)</strong></td>
+                            <td>該項所有變數的指數（次方）總和</td>
+                            <td>$5x^3$ 的次數是 $3$<br>$-x^2y$ 的次數是 $2+1 = 3$</td>
+                        </tr>
+                        <tr>
+                            <td><strong>多項式的次數 (Degree of polynomial)</strong></td>
+                            <td>各項中「最高」的次數</td>
+                            <td>$3$</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>2. 多項式的排序</h2>
+                <p>為了整齊和方便計算，我們通常會根據某個變數的次方數，將多項式重新排列：</p>
+                <ul>
+                    <li><strong>遞增序 (Ascending order)：</strong> 變數的次方由小排到大（常數項排最前）。</li>
+                    <li><strong>遞減序 (Descending order)：</strong> 變數的次方由大排到小（常數項排最後）。</li>
+                </ul>
+                <div class="example-box">
+                    <strong>例子：將 $-3x + 2x^3 + 7 - x^2$ 排序</strong><br><br>
+                    按 $x$ 的<strong>遞增序</strong>排列：<span class="highlight">$7 - 3x - x^2 + 2x^3$</span><br>
+                    按 $x$ 的<strong>遞減序</strong>排列：<span class="highlight">$2x^3 - x^2 - 3x + 7$</span><br>
+                    <em>（注意：搬動項時，必須連同前面的正負號一起搬！）</em>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>3. 多項式的加減</h2>
+                <p>多項式加減的核心技巧是<strong>「合併同類項 (Like terms)」</strong>。只有變數部分完全相同的項，才可以進行加減。</p>
+                <div class="example-box">
+                    <strong>例子：計算 $(4x^2 - 3x + 5) - (2x^2 - x - 3)$</strong><br><br>
+                    步驟 1（拆括號，特別注意負號分配進去時要變號）：<br>
+                    $$ 4x^2 - 3x + 5 - 2x^2 + x + 3 $$
+                    步驟 2（將同類項放在一起 - 選擇性步驟）：<br>
+                    $$ (4x^2 - 2x^2) + (-3x + x) + (5 + 3) $$
+                    步驟 3（合併計算）：<br>
+                    $$ \mathbf{2x^2 - 2x + 8} $$
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>4. 正指數定律 (Laws of Indices)</h2>
+                <p>在處理多項式乘除之前，必須掌握指數的運算法則（目前只涉及正整數）：</p>
+                <table class="math-table">
+                    <tr>
+                        <th>定律</th>
+                        <th>公式</th>
+                        <th>例子</th>
+                    </tr>
+                    <tr>
+                        <td>同底數相乘 (次數相加)</td>
+                        <td>$a^m \times a^n = a^{m+n}$</td>
+                        <td>$x^3 \times x^2 = x^{3+2} = x^5$</td>
+                    </tr>
+                    <tr>
+                        <td>同底數相除 (次數相減)</td>
+                        <td>$\frac{a^m}{a^n} = a^{m-n}$</td>
+                        <td>$\frac{y^6}{y^2} = y^{6-2} = y^4$</td>
+                    </tr>
+                    <tr>
+                        <td>次方的次方 (次數相乘)</td>
+                        <td>$(a^m)^n = a^{mn}$</td>
+                        <td>$(m^2)^4 = m^{2 \times 4} = m^8$</td>
+                    </tr>
+                    <tr>
+                        <td>乘積的次方 (各自次方)</td>
+                        <td>$(ab)^n = a^n b^n$</td>
+                        <td>$(3x)^2 = 3^2 x^2 = 9x^2$</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>5. 多項式的乘法 (展開 Expansion)</h2>
+                <p>當兩個多項式相乘時，我們需要使用分配律，確保第一個括號內的每一項，都乘遍第二個括號內的每一項。</p>
+                <p>為了避免混亂或漏乘，我們強烈建議使用<strong>「表格法」</strong>來輔助計算！</p>
+                
+                <div class="example-box">
+                    <strong>例子：展開 $(x + y)(2x - 5y)$</strong><br><br>
+                    步驟 1：畫一個 $2 \times 2$ 的表格。將第一個括號的項寫在左側，第二個括號的項寫在上方（連同正負號）。<br><br>
+                    <table class="math-table" style="width: 70%; text-align: center;">
+                        <tr>
+                            <th style="background-color: #e9ecef;">$\times$</th>
+                            <th>$2x$</th>
+                            <th>$-5y$</th>
+                        </tr>
+                        <tr>
+                            <th>$x$</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <th>$y$</th>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                    </table>
+                    <br>
+                    步驟 2：將對應行列的項相乘，填入空格中。（留意數字乘數字，字母乘字母）。<br><br>
+                    <table class="math-table" style="width: 70%; text-align: center;">
+                        <tr>
+                            <th style="background-color: #e9ecef;">$\times$</th>
+                            <th>$2x$</th>
+                            <th>$-5y$</th>
+                        </tr>
+                        <tr>
+                            <th>$x$</th>
+                            <td style="color: blue;">$2x^2$</td>
+                            <td style="color: red;">$-5xy$</td>
+                        </tr>
+                        <tr>
+                            <th>$y$</th>
+                            <td style="color: red;">$2xy$</td>
+                            <td style="color: blue;">$-5y^2$</td>
+                        </tr>
+                    </table>
+                    <br>
+                    步驟 3：將表格內所有的結果寫出來，並合併同類項。<br>
+                    $$
+                    \begin{aligned}
+                    \text{展開結果} &= 2x^2 - 5xy + 2xy - 5y^2 \\
+                    &= \mathbf{2x^2 - 3xy - 5y^2}
+                    \end{aligned}
+                    $$
+                </div>
+            </div>
+        </div>
+
+        <div id="topic7" class="tab-content">
+            <div class="example-box" style="border-left: 6px solid #d32f2f; background-color: #ffebee; margin-bottom: 25px;">
+                <strong style="color: #c62828; font-size: 1.1em;">⚠️ 考試大忌：漏寫幾何原因！</strong><br>
+                <p style="margin: 5px 0 0 0; color: #333; line-height: 1.5;">
+                    在做幾何求角或證明題時，只要你用了某個定理，就<strong>必須在算式的括號內寫出幾何原因</strong>（即下方用<span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d;">黃色螢光筆</span>亮顯的字眼）。<br>
+                    <strong>不寫理由 = 扣除該步驟的所有分數！</strong>必須養成熟練默寫的習慣。
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>0. 點、線、角、面的命名規則</h2>
+                <div style="display: flex; flex-wrap: wrap; align-items: center; gap: 20px;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <ul>
+                            <li><strong>點：</strong>用大寫英文字母，如：點 $A$。</li>
+                            <li><strong>線：</strong>由兩點連接，如：直線 $AB$。</li>
+                            <li><strong>角：</strong>用三點表示，<strong>頂點必須在中間</strong>。如右圖藍色弧線標示的 $\angle ABC$。</li>
+                            <li><strong>面：</strong>依順序讀出頂點，如：平面 $ABCD$。</li>
+                        </ul>
+                    </div>
+                    <div style="text-align: center; flex: 1; min-width: 200px;">
+                        <svg viewBox="0 0 240 120" width="100%" max-width="240px" style="background: #f8f9fa; border-radius: 8px; border: 1px solid #e2e8f0; max-height: 120px;">
+                            <polygon points="40,100 200,100 130,30" stroke="#333" stroke-width="2" fill="#e0f2fe" fill-opacity="0.5" />
+                            <circle cx="40" cy="100" r="4" fill="#333" /><text x="25" y="105" font-family="sans-serif" font-size="14" font-weight="bold">A</text>
+                            <circle cx="200" cy="100" r="4" fill="#333" /><text x="210" y="105" font-family="sans-serif" font-size="14" font-weight="bold">C</text>
+                            <circle cx="130" cy="30" r="4" fill="#333" /><text x="125" y="20" font-family="sans-serif" font-size="14" font-weight="bold">B</text>
+                            <path d="M 118,44 A 20,20 0 0 0 138,44" fill="none" stroke="#0056b3" stroke-width="3" />
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>1-3. 與直線及相交線相關的角</h2>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 15px; margin-top: 15px;">
+                    <div class="example-box" style="margin: 0; text-align: center;">
+                        <h4 style="margin-top:0; text-align:left;">1. 直線上的鄰角</h4>
+                        <p style="text-align:left; font-size: 0.9em; margin-bottom: 15px;">
+                            ✍️ 步驟必寫原因：<br>
+                            <span style="background-color: #ffeb3b; padding: 2px 6px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d; display: inline-block; margin-top: 4px;">直線上的鄰角</span>
+                        </p>
+                        <svg viewBox="0 0 200 100" width="100%" style="background: #fff; border-radius: 6px; border: 1px solid #ddd; max-height: 100px;">
+                            <line x1="20" y1="80" x2="180" y2="80" stroke="#333" stroke-width="2" />
+                            <line x1="100" y1="80" x2="150" y2="30" stroke="#333" stroke-width="2" />
+                            <path d="M 70 80 A 30 30 0 0 1 121 59" fill="none" stroke="#0056b3" stroke-width="2"/>
+                            <path d="M 121 59 A 30 30 0 0 1 130 80" fill="none" stroke="#dc3545" stroke-width="2"/>
+                            <text x="75" y="72" font-family="sans-serif" font-size="16" font-weight="bold" fill="#0056b3">a</text>
+                            <text x="120" y="72" font-family="sans-serif" font-size="16" font-weight="bold" fill="#dc3545">b</text>
+                        </svg>
+                        <p style="font-weight:bold; margin-bottom:0;">$$a + b = 180^\circ$$</p>
+                    </div>
+
+                    <div class="example-box" style="margin: 0; text-align: center; border-left-color: #28a745;">
+                        <h4 style="margin-top:0; text-align:left;">2. 同頂角</h4>
+                        <p style="text-align:left; font-size: 0.9em; margin-bottom: 15px;">
+                            ✍️ 步驟必寫原因：<br>
+                            <span style="background-color: #ffeb3b; padding: 2px 6px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d; display: inline-block; margin-top: 4px;">同頂角</span>
+                        </p>
+                        <svg viewBox="0 0 200 100" width="100%" style="background: #fff; border-radius: 6px; border: 1px solid #ddd; max-height: 100px;">
+                            <circle cx="100" cy="50" r="3" fill="#333" />
+                            <line x1="100" y1="50" x2="170" y2="50" stroke="#333" stroke-width="2" />
+                            <line x1="100" y1="50" x2="100" y2="10" stroke="#333" stroke-width="2" />
+                            <line x1="100" y1="50" x2="40" y2="30" stroke="#333" stroke-width="2" />
+                            <line x1="100" y1="50" x2="60" y2="90" stroke="#333" stroke-width="2" />
+                            <path d="M 120 50 A 20 20 0 0 0 100 30" fill="none" stroke="#0056b3" stroke-width="2"/>
+                            <path d="M 100 30 A 20 20 0 0 0 81 44" fill="none" stroke="#28a745" stroke-width="2"/>
+                            <path d="M 81 44 A 20 20 0 0 0 86 64" fill="none" stroke="#dc3545" stroke-width="2"/>
+                            <path d="M 86 64 A 20 20 0 0 0 120 50" fill="none" stroke="#ffc107" stroke-width="2"/>
+                            <text x="115" y="42" font-family="sans-serif" font-size="14" font-weight="bold" fill="#0056b3">a</text>
+                            <text x="88" y="38" font-family="sans-serif" font-size="14" font-weight="bold" fill="#28a745">b</text>
+                            <text x="73" y="62" font-family="sans-serif" font-size="14" font-weight="bold" fill="#dc3545">c</text>
+                            <text x="110" y="70" font-family="sans-serif" font-size="14" font-weight="bold" fill="#ffc107">d</text>
+                        </svg>
+                        <p style="font-weight:bold; margin-bottom:0;">$$a + b + c + d = 360^\circ$$</p>
+                    </div>
+
+                    <div class="example-box" style="margin: 0; text-align: center; border-left-color: #ffc107;">
+                        <h4 style="margin-top:0; text-align:left;">3. 對頂角</h4>
+                        <p style="text-align:left; font-size: 0.9em; margin-bottom: 15px;">
+                            ✍️ 步驟必寫原因：<br>
+                            <span style="background-color: #ffeb3b; padding: 2px 6px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d; display: inline-block; margin-top: 4px;">對頂角</span>
+                        </p>
+                        <svg viewBox="0 0 200 100" width="100%" style="background: #fff; border-radius: 6px; border: 1px solid #ddd; max-height: 100px;">
+                            <line x1="30" y1="20" x2="170" y2="80" stroke="#333" stroke-width="2" />
+                            <line x1="30" y1="80" x2="170" y2="20" stroke="#333" stroke-width="2" />
+                            <path d="M 85 44 A 20 20 0 0 1 85 56" fill="none" stroke="#0056b3" stroke-width="2"/>
+                            <path d="M 115 44 A 20 20 0 0 0 115 56" fill="none" stroke="#0056b3" stroke-width="2"/>
+                            <path d="M 85 44 A 20 20 0 0 0 115 44" fill="none" stroke="#dc3545" stroke-width="2"/>
+                            <path d="M 85 56 A 20 20 0 0 1 115 56" fill="none" stroke="#dc3545" stroke-width="2"/>
+                            <text x="65" y="55" font-family="sans-serif" font-size="15" font-weight="bold" fill="#0056b3">a</text>
+                            <text x="125" y="55" font-family="sans-serif" font-size="15" font-weight="bold" fill="#0056b3">c</text>
+                            <text x="95" y="36" font-family="sans-serif" font-size="15" font-weight="bold" fill="#dc3545">b</text>
+                            <text x="95" y="76" font-family="sans-serif" font-size="15" font-weight="bold" fill="#dc3545">d</text>
+                        </svg>
+                        <p style="font-weight:bold; margin-bottom:0;">$$a = c \quad , \quad b = d$$</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>4-5. 三角形相關的角</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px;">
+                    
+                    <div class="example-box" style="text-align: center;">
+                        <h4 style="margin-top:0; text-align:left;">4. 三角形內角和</h4>
+                        <p style="text-align:left; font-size: 0.9em; margin-bottom: 15px;">
+                            ✍️ 步驟必寫原因：<br>
+                            <span style="background-color: #ffeb3b; padding: 2px 6px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d; display: inline-block; margin-top: 4px;">三角形內角和</span>
+                        </p>
+                        <svg viewBox="0 0 240 110" width="100%" style="background: #fff; border-radius: 6px; border: 1px solid #ddd; max-height: 110px;">
+                            <polygon points="40,90 200,90 130,20" stroke="#333" stroke-width="2" fill="none" />
+                            <path d="M 60 90 A 20 20 0 0 0 52 79" fill="none" stroke="#0056b3" stroke-width="2"/>
+                            <path d="M 188 79 A 20 20 0 0 0 180 90" fill="none" stroke="#28a745" stroke-width="2"/>
+                            <path d="M 120 31 A 15 15 0 0 0 141 32" fill="none" stroke="#dc3545" stroke-width="2"/>
+                            <text x="65" y="82" font-family="sans-serif" font-size="15" font-weight="bold" fill="#0056b3">a</text>
+                            <text x="165" y="82" font-family="sans-serif" font-size="15" font-weight="bold" fill="#28a745">b</text>
+                            <text x="123" y="45" font-family="sans-serif" font-size="15" font-weight="bold" fill="#dc3545">c</text>
+                        </svg>
+                        <p style="font-weight:bold;">$$a + b + c = 180^\circ$$</p>
+                    </div>
+
+                    <div class="example-box" style="text-align: center; border-left-color: #dc3545;">
+                        <h4 style="margin-top:0; text-align:left;">5. 三角形外角</h4>
+                        <p style="text-align:left; font-size: 0.9em; margin-bottom: 15px;">
+                            ✍️ 步驟必寫原因：<br>
+                            <span style="background-color: #ffeb3b; padding: 2px 6px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d; display: inline-block; margin-top: 4px;">三角形外角</span>
+                        </p>
+                        <svg viewBox="0 0 240 110" width="100%" style="background: #fff; border-radius: 6px; border: 1px solid #ddd; max-height: 110px;">
+                            <polygon points="30,90 150,90 110,25" stroke="#333" stroke-width="2" fill="none" />
+                            <line x1="150" y1="90" x2="220" y2="90" stroke="#333" stroke-width="2" />
+                            <path d="M 50 90 A 20 20 0 0 0 42 74" fill="none" stroke="#0056b3" stroke-width="2"/>
+                            <path d="M 100 38 A 15 15 0 0 0 118 38" fill="none" stroke="#28a745" stroke-width="2"/>
+                            <path d="M 170 90 A 20 20 0 0 0 142 77" fill="none" stroke="#dc3545" stroke-width="3"/>
+                            <text x="55" y="82" font-family="sans-serif" font-size="15" font-weight="bold" fill="#0056b3">a</text>
+                            <text x="105" y="50" font-family="sans-serif" font-size="15" font-weight="bold" fill="#28a745">b</text>
+                            <text x="165" y="82" font-family="sans-serif" font-size="16" font-weight="bold" fill="#dc3545">d</text>
+                        </svg>
+                        <p style="font-weight:bold;">$$d = a + b$$</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>6-8. 平行線相關的角 (已知 $AB \parallel CD$)</h2>
+                <p>當題目給出平行線箭頭時，請利用<strong>「F、Z、C」粗色管道</strong>和<strong>對應的角弧</strong>來辨認：</p>
+                
+                <table class="math-table" style="vertical-align: middle; width: 100%;">
+                    <tr>
+                        <th style="width: 35%;">名稱及步驟必寫理由</th>
+                        <th style="width: 15%; text-align:center;">字形</th>
+                        <th style="width: 50%; text-align:center;">圖解角弧與關係</th>
+                    </tr>
+                    <tr>
+                        <td><strong>同位角</strong><br><br>
+                            <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d; font-size:0.9em;">同位角, AB // CD</span>
+                        </td>
+                        <td style="font-size: 1.8rem; color: #0056b3; font-weight: bold; text-align:center;">F</td>
+                        <td style="text-align:center;">
+                            <svg viewBox="0 0 220 100" width="100%" style="background: #fff; max-height: 100px;">
+                                <path d="M 150 30 L 80 30 L 60 10" fill="none" stroke="#cce5ff" stroke-width="8" stroke-linecap="round"/>
+                                <path d="M 190 70 L 120 70 L 100 50" fill="none" stroke="#cce5ff" stroke-width="8" stroke-linecap="round"/>
+                                <line x1="30" y1="30" x2="190" y2="30" stroke="#333" stroke-width="2" />
+                                <line x1="30" y1="70" x2="190" y2="70" stroke="#333" stroke-width="2" />
+                                <line x1="60" y1="10" x2="140" y2="90" stroke="#333" stroke-width="2" />
+                                <path d="M 100 30 A 20 20 0 0 1 94 44" fill="none" stroke="#0056b3" stroke-width="2"/>
+                                <path d="M 140 70 A 20 20 0 0 1 134 84" fill="none" stroke="#0056b3" stroke-width="2"/>
+                                <path d="M 45,25 L 52,30 L 45,35" fill="none" stroke="#333" stroke-width="2" />
+                                <path d="M 45,65 L 52,70 L 45,75" fill="none" stroke="#333" stroke-width="2" />
+                                <text x="100" y="24" font-family="sans-serif" font-size="15" font-weight="bold" fill="#0056b3">a</text>
+                                <text x="140" y="65" font-family="sans-serif" font-size="15" font-weight="bold" fill="#0056b3">b</text>
+                            </svg>
+                            <br><strong>$a = b$</strong> (相等)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>錯角</strong><br><br>
+                            <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d; font-size:0.9em;">錯角, AB // CD</span>
+                        </td>
+                        <td style="font-size: 1.8rem; color: #28a745; font-weight: bold; text-align:center;">Z</td>
+                        <td style="text-align:center;">
+                            <svg viewBox="0 0 220 100" width="100%" style="background: #fff; max-height: 100px;">
+                                <path d="M 30 30 L 80 30 L 120 70 L 190 70" fill="none" stroke="#d4edda" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+                                <line x1="30" y1="30" x2="190" y2="30" stroke="#333" stroke-width="2" />
+                                <line x1="30" y1="70" x2="190" y2="70" stroke="#333" stroke-width="2" />
+                                <line x1="60" y1="10" x2="140" y2="90" stroke="#333" stroke-width="2" />
+                                <path d="M 100 30 A 20 20 0 0 1 94 44" fill="none" stroke="#28a745" stroke-width="2"/>
+                                <path d="M 100 70 A 20 20 0 0 1 106 56" fill="none" stroke="#28a745" stroke-width="2"/>
+                                <path d="M 45,25 L 52,30 L 45,35" fill="none" stroke="#333" stroke-width="2" />
+                                <path d="M 45,65 L 52,70 L 45,75" fill="none" stroke="#333" stroke-width="2" />
+                                <text x="100" y="24" font-family="sans-serif" font-size="15" font-weight="bold" fill="#28a745">a</text>
+                                <text x="110" y="65" font-family="sans-serif" font-size="15" font-weight="bold" fill="#28a745">b</text>
+                            </svg>
+                            <br><strong>$a = b$</strong> (相等)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><strong>同旁內角</strong><br><br>
+                            <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d; font-size:0.9em;">同旁內角, AB // CD</span>
+                        </td>
+                        <td style="font-size: 1.8rem; color: #dc3545; font-weight: bold; text-align:center;">C</td>
+                        <td style="text-align:center;">
+                            <svg viewBox="0 0 220 100" width="100%" style="background: #fff; max-height: 100px;">
+                                <path d="M 170 30 L 80 30 L 120 70 L 190 70" fill="none" stroke="#f8d7da" stroke-width="8" stroke-linejoin="round" stroke-linecap="round"/>
+                                <line x1="30" y1="30" x2="190" y2="30" stroke="#333" stroke-width="2" />
+                                <line x1="30" y1="70" x2="190" y2="70" stroke="#333" stroke-width="2" />
+                                <line x1="60" y1="10" x2="140" y2="90" stroke="#333" stroke-width="2" />
+                                <path d="M 100 30 A 20 20 0 0 1 94 44" fill="none" stroke="#dc3545" stroke-width="2"/>
+                                <path d="M 140 70 A 20 20 0 0 0 106 56" fill="none" stroke="#dc3545" stroke-width="2"/>
+                                <path d="M 45,25 L 52,30 L 45,35" fill="none" stroke="#333" stroke-width="2" />
+                                <path d="M 45,65 L 52,70 L 45,75" fill="none" stroke="#333" stroke-width="2" />
+                                <text x="100" y="24" font-family="sans-serif" font-size="15" font-weight="bold" fill="#dc3545">a</text>
+                                <text x="120" y="65" font-family="sans-serif" font-size="15" font-weight="bold" fill="#dc3545">b</text>
+                            </svg>
+                            <br><strong>$a + b = 180^\circ$</strong> (互補)
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="card">
+                <h2>9. 證明平行的理由</h2>
+                <p>如果你要在題目中<strong>證明</strong>兩條直線平行，只要計算出角度符合以下其中一個狀態，並在步驟寫出對應理由：</p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 15px;">
+                    <div class="example-box" style="flex: 1; min-width: 200px; margin: 0; border-left-color: #0056b3;">
+                        <strong>條件一：同位角相等</strong><br><br>
+                        ✍️ 步驟必寫原因：<br>
+                        <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d;">同位角相等</span>
+                    </div>
+                    <div class="example-box" style="flex: 1; min-width: 200px; margin: 0; border-left-color: #28a745;">
+                        <strong>條件二：錯角相等</strong><br><br>
+                        ✍️ 步驟必寫原因：<br>
+                        <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d;">錯角相等</span>
+                    </div>
+                    <div class="example-box" style="flex: 1; min-width: 200px; margin: 0; border-left-color: #dc3545;">
+                        <strong>條件三：同旁內角互補</strong><br><br>
+                        ✍️ 步驟必寫原因：<br>
+                        <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d;">同旁內角互補</span>
+                    </div>
+                </div>
+
+                <div class="example-box" style="border-left-color: #ffc107; margin-top: 20px;">
+                    <strong>🔥 再次強調：理由字眼必須精準！</strong><br>
+                    <ul>
+                        <li><strong>已知線平行 $\rightarrow$ 求角度：</strong> 必須寫有條線名字的理由，例如：<span style="background-color: #ffeb3b; font-weight: bold; padding: 1px 3px;">同位角, AB // CD</span></li>
+                        <li><strong>已知角度 $\rightarrow$ 求證線平行：</strong> 絕對不能寫條線名字！必須寫狀態，例如：<span style="background-color: #ffeb3b; font-weight: bold; padding: 1px 3px;">同位角相等</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="topic8" class="tab-content">
+            <div class="example-box" style="border-left: 6px solid #d32f2f; background-color: #ffebee; margin-bottom: 25px;">
+                <strong style="color: #c62828; font-size: 1.1em;">⚠️ 考試大忌：漏寫或寫錯單位！</strong><br>
+                <p style="margin: 5px 0 0 0; color: #333; line-height: 1.5;">
+                    計算完結時，必須寫上正確的單位！<br>
+                    📏 長度 / 周界：$cm$ , $m$<br>
+                    🔲 面積 / 表面面積：$cm^2$ , $m^2$ (平方)<br>
+                    🧊 體積：$cm^3$ , $m^3$ (立方)
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>1. 常見二維圖形面積公式</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    
+                    <div class="example-box" style="margin: 0; text-align: center; border-left-color: #0056b3;">
+                        <h4 style="margin-top:0;">正方形 / 長方形</h4>
+                        <svg viewBox="0 0 200 120" width="100%" style="max-height: 100px;">
+                            <rect x="50" y="20" width="100" height="70" fill="#e0f2fe" stroke="#0056b3" stroke-width="2" />
+                            <text x="100" y="15" font-family="sans-serif" font-size="14" text-anchor="middle">長 (l)</text>
+                            <text x="35" y="60" font-family="sans-serif" font-size="14" text-anchor="end" alignment-baseline="middle">闊 (w)</text>
+                        </svg>
+                        <p style="font-weight:bold; margin-bottom:0;">$$ \text{面積} = \text{長} \times \text{闊} $$</p>
+                    </div>
+
+                    <div class="example-box" style="margin: 0; text-align: center; border-left-color: #28a745;">
+                        <h4 style="margin-top:0;">平行四邊形</h4>
+                        <svg viewBox="0 0 200 120" width="100%" style="max-height: 100px;">
+                            <polygon points="40,90 160,90 180,30 60,30" fill="#d4edda" stroke="#28a745" stroke-width="2" />
+                            <line x1="60" y1="30" x2="60" y2="90" stroke="#dc3545" stroke-width="2" stroke-dasharray="4" />
+                            <polyline points="60,80 70,80 70,90" fill="none" stroke="#dc3545" stroke-width="1.5" />
+                            <text x="100" y="105" font-family="sans-serif" font-size="14" text-anchor="middle">底 (b)</text>
+                            <text x="50" y="65" font-family="sans-serif" font-size="14" fill="#dc3545" text-anchor="end">高 (h)</text>
+                        </svg>
+                        <p style="font-weight:bold; margin-bottom:0;">$$ \text{面積} = \text{底} \times \text{高} $$</p>
+                    </div>
+
+                    <div class="example-box" style="margin: 0; text-align: center; border-left-color: #ffc107;">
+                        <h4 style="margin-top:0;">三角形</h4>
+                        <svg viewBox="0 0 200 120" width="100%" style="max-height: 100px;">
+                            <polygon points="30,90 170,90 80,20" fill="#fff3cd" stroke="#ffc107" stroke-width="2" />
+                            <line x1="80" y1="20" x2="80" y2="90" stroke="#dc3545" stroke-width="2" stroke-dasharray="4" />
+                            <polyline points="80,80 90,80 90,90" fill="none" stroke="#dc3545" stroke-width="1.5" />
+                            <text x="100" y="105" font-family="sans-serif" font-size="14" text-anchor="middle">底 (b)</text>
+                            <text x="70" y="65" font-family="sans-serif" font-size="14" fill="#dc3545" text-anchor="end">高 (h)</text>
+                        </svg>
+                        <p style="font-weight:bold; margin-bottom:0;">$$ \text{面積} = \frac{\text{底} \times \text{高}}{2} $$</p>
+                    </div>
+
+                    <div class="example-box" style="margin: 0; text-align: center; border-left-color: #dc3545;">
+                        <h4 style="margin-top:0;">梯形</h4>
+                        <svg viewBox="0 0 200 120" width="100%" style="max-height: 100px;">
+                            <polygon points="20,90 180,90 130,30 60,30" fill="#f8d7da" stroke="#dc3545" stroke-width="2" />
+                            <line x1="60" y1="30" x2="60" y2="90" stroke="#0056b3" stroke-width="2" stroke-dasharray="4" />
+                            <polyline points="60,80 70,80 70,90" fill="none" stroke="#0056b3" stroke-width="1.5" />
+                            <text x="95" y="22" font-family="sans-serif" font-size="14" text-anchor="middle">上底 (a)</text>
+                            <text x="100" y="105" font-family="sans-serif" font-size="14" text-anchor="middle">下底 (b)</text>
+                            <text x="50" y="65" font-family="sans-serif" font-size="14" fill="#0056b3" text-anchor="end">高 (h)</text>
+                        </svg>
+                        <p style="font-weight:bold; margin-bottom:0;">$$ \text{面積} = \frac{(\text{上底} + \text{下底}) \times \text{高}}{2} $$</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>2. 複雜圖形面積：分割法與填補法</h2>
+                <p>遇到不規則的多邊形，我們可以利用以下兩種方法將其轉化為基本圖形來計算：</p>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                    <div class="example-box" style="flex: 1; min-width: 250px; text-align: center;">
+                        <h4 style="margin-top:0;">✂️ 分割法 (加法)</h4>
+                        <p style="font-size: 0.9em; text-align: left;">將圖形切開，變成幾個簡單圖形，然後<strong>相加</strong>。</p>
+                        <svg viewBox="0 0 200 140" width="100%" style="max-height: 120px;">
+                            <polygon points="50,20 100,20 100,70 150,70 150,120 50,120" fill="#e0f2fe" stroke="#0056b3" stroke-width="2" />
+                            <line x1="100" y1="70" x2="50" y2="70" stroke="#dc3545" stroke-width="3" stroke-dasharray="5,5" />
+                            <text x="75" y="50" font-family="sans-serif" font-size="16" font-weight="bold" fill="#0056b3">A</text>
+                            <text x="100" y="100" font-family="sans-serif" font-size="16" font-weight="bold" fill="#0056b3">B</text>
+                        </svg>
+                        <p style="font-weight:bold; margin-bottom:0;">總面積 = A + B</p>
+                    </div>
+
+                    <div class="example-box" style="flex: 1; min-width: 250px; text-align: center;">
+                        <h4 style="margin-top:0;">🧱 填補法 (減法)</h4>
+                        <p style="font-size: 0.9em; text-align: left;">將圖形補成一個大圖形，然後<strong>減去</strong>多出來的空白部分。</p>
+                        <svg viewBox="0 0 200 140" width="100%" style="max-height: 120px;">
+                            <rect x="50" y="20" width="100" height="100" fill="#f8f9fa" stroke="#dc3545" stroke-width="2" stroke-dasharray="5,5" />
+                            <polygon points="50,20 100,20 100,70 150,70 150,120 50,120" fill="#d4edda" stroke="#28a745" stroke-width="2" />
+                            <text x="75" y="70" font-family="sans-serif" font-size="16" font-weight="bold" fill="#28a745">大</text>
+                            <text x="125" y="50" font-family="sans-serif" font-size="16" font-weight="bold" fill="#dc3545">小</text>
+                        </svg>
+                        <p style="font-weight:bold; margin-bottom:0;">總面積 = 大面積 - 小面積</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>3. 柱體體積 (Volume of Prism)</h2>
+                <p>所有均勻柱體的體積公式都只有一個：</p>
+                <div style="text-align: center; margin: 15px 0;">
+                    <span style="background-color: #ffeb3b; padding: 5px 15px; font-weight: bold; border-radius: 5px; border-bottom: 3px solid #fbc02d; font-size: 1.3em;">
+                        體積 = 底面積 × 高
+                    </span>
+                </div>
+                
+                <div class="example-box" style="border-left-color: #dc3545;">
+                    <strong style="color: #c62828;">🚨 致命陷阱：什麼是「底面」？什麼是「高」？</strong>
+                    <ul style="margin-top: 5px;">
+                        <li><strong>底面 (Base)：</strong> <span style="text-decoration: underline;">絕對不是指貼在地上那一面！</span>底面是指柱體中<strong>「形狀相同、大小相等且互相平行」</strong>的兩個面。（就像切方包一樣，每一刀切出來形狀都不會變的那一面）。</li>
+                        <li><strong>高 (Height)：</strong> 連接兩個「底面」之間的距離。</li>
+                    </ul>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: center;">
+                    <div style="text-align: center; width: 200px;">
+                        <svg viewBox="0 0 150 180" width="100%">
+                            <line x1="50" y1="140" x2="50" y2="40" stroke="#999" stroke-width="1.5" stroke-dasharray="4" />
+                            <line x1="50" y1="140" x2="30" y2="160" stroke="#999" stroke-width="1.5" stroke-dasharray="4" />
+                            <line x1="50" y1="140" x2="110" y2="140" stroke="#999" stroke-width="1.5" stroke-dasharray="4" />
+                            <polygon points="30,160 90,160 110,140" fill="#e0f2fe" opacity="0.6"/>
+                            <polygon points="30,60 90,60 110,40 50,40" fill="#f8d7da" stroke="#dc3545" stroke-width="2" />
+                            <polygon points="30,160 90,160 90,60 30,60" fill="#e0f2fe" opacity="0.6" stroke="#0056b3" stroke-width="1.5"/>
+                            <polygon points="90,160 110,140 110,40 90,60" fill="#bae6fd" opacity="0.6" stroke="#0056b3" stroke-width="1.5"/>
+                            
+                            <text x="70" y="55" font-family="sans-serif" font-size="14" font-weight="bold" fill="#dc3545" text-anchor="middle">底面 (Base)</text>
+                            <path d="M 125,40 L 125,140" fill="none" stroke="#28a745" stroke-width="3" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+                            <text x="135" y="95" font-family="sans-serif" font-size="14" font-weight="bold" fill="#28a745" alignment-baseline="middle">高</text>
+                        </svg>
+                        <p style="font-size: 0.9em; color: #555;">直立放置，底面在頂/底</p>
+                    </div>
+
+                    <div style="text-align: center; width: 250px;">
+                        <svg viewBox="0 0 220 180" width="100%">
+                            <line x1="50" y1="40" x2="170" y2="40" stroke="#0056b3" stroke-width="1.5" />
+                            <line x1="30" y1="120" x2="150" y2="120" stroke="#0056b3" stroke-width="1.5" />
+                            <line x1="90" y1="120" x2="210" y2="120" stroke="#0056b3" stroke-width="1.5" />
+                            <line x1="50" y1="140" x2="170" y2="140" stroke="#999" stroke-width="1.5" stroke-dasharray="4" />
+                            
+                            <polygon points="50,40 30,120 90,120" fill="#f8d7da" stroke="#dc3545" stroke-width="2" />
+                            <polygon points="170,40 150,120 210,120" fill="#f8d7da" stroke="#dc3545" stroke-width="2" />
+                            
+                            <line x1="50" y1="40" x2="170" y2="40" stroke="#0056b3" stroke-width="1.5" />
+                            <line x1="30" y1="120" x2="150" y2="120" stroke="#0056b3" stroke-width="1.5" />
+                            <line x1="90" y1="120" x2="210" y2="120" stroke="#0056b3" stroke-width="1.5" />
+                            
+                            <text x="60" y="90" font-family="sans-serif" font-size="14" font-weight="bold" fill="#dc3545" text-anchor="middle">底面!</text>
+                            <path d="M 90,140 L 210,140" fill="none" stroke="#28a745" stroke-width="3" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+                            <text x="150" y="160" font-family="sans-serif" font-size="14" font-weight="bold" fill="#28a745" text-anchor="middle">這才是「高」</text>
+                            
+                            <defs>
+                                <marker id="arrow" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto-start-reverse">
+                                    <polygon points="0,0 6,3 0,6" fill="#28a745" />
+                                </marker>
+                            </defs>
+                        </svg>
+                        <p style="font-size: 0.9em; color: #555;">橫放時，底面在側邊！<br>(躺在地上的矩形<strong>不是</strong>底面)</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>4. 柱體總表面面積 (Total Surface Area)</h2>
+                <p>表面面積就是把柱體外面「所有能被油漆刷到的面」的面積加起來。</p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                    <div class="example-box" style="flex: 1; min-width: 250px;">
+                        <strong>方法一：逐塊相加 (最穩陣)</strong><br>
+                        把柱體所有的面（包括頂、底、前、後、左、右）的面積分別計出來，然後全部加在一起。
+                    </div>
+                    
+                    <div class="example-box" style="flex: 1; min-width: 250px; border-left-color: #28a745;">
+                        <strong>方法二：萬用公式 (最快捷)</strong><br>
+                        柱體有 2 個一模一樣的「底面」，而包圍著柱體的「側面」其實可以攤開成一個大長方形！<br><br>
+                        <span style="background-color: #ffeb3b; padding: 2px 6px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d;">
+                            總表面面積 = (底面積 × 2) + 側面面積
+                        </span><br><br>
+                        ※ 提示：側面面積的快算公式是 $\mathbf{\text{底周界} \times \text{高}}$。
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div id="topic9" class="tab-content">
+            
+            <div class="example-box" style="border-left: 6px solid #d32f2f; background-color: #ffebee; margin-bottom: 25px;">
+                <strong style="color: #c62828; font-size: 1.1em;">⚠️ 考試防錯提示：先 x 後 y！</strong><br>
+                <p style="margin: 5px 0 0 0; color: #333; line-height: 1.5;">
+                    坐標的寫法永遠是 <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px; border-bottom: 2px solid #fbc02d;">(左右, 上下)</span>。<br>
+                    第一個數字看 $x$ 軸（橫向），第二個數字看 $y$ 軸（直向）。千萬不要倒轉！
+                </p>
+            </div>
+
+            <div class="card">
+                <h2>1-2. 坐標寫法與四個象限 (Quadrants)</h2>
+                <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
+                    <div style="flex: 1; min-width: 250px;">
+                        <p>直角坐標系由水平的 <strong>$x$ 軸</strong> 與鉛垂的 <strong>$y$ 軸</strong> 相交於 <strong>原點 $O(0,0)$</strong> 組成，並將平面分成四個區域，稱為「象限」。</p>
+                        <ul>
+                            <li><strong>第一象限 (I)：</strong> $(+, +)$ ，在原點的右上方。</li>
+                            <li><strong>第二象限 (II)：</strong> $(-, +)$ ，在原點的左上方。</li>
+                            <li><strong>第三象限 (III)：</strong> $(-, -)$ ，在原點的左下方。</li>
+                            <li><strong>第四象限 (IV)：</strong> $(+, -)$ ，在原點的右下方。</li>
+                        </ul>
+                        <p>※ 寫法例子：點 $P$ 向右行 $3$ 步，向上行 $2$ 步 $\rightarrow \mathbf{P(3, 2)}$</p>
+                    </div>
+                    
+                    <div style="flex: 1; min-width: 250px; text-align: center;">
+                        <svg viewBox="-120 -120 240 240" width="100%" style="background: #f8f9fa; border-radius: 8px; border: 1px solid #ddd; max-height: 220px;">
+                            <g stroke="#e2e8f0" stroke-width="1">
+                                <line x1="-100" y1="-50" x2="100" y2="-50"/><line x1="-100" y1="50" x2="100" y2="50"/>
+                                <line x1="-50" y1="-100" x2="-50" y2="100"/><line x1="50" y1="-100" x2="50" y2="100"/>
+                            </g>
+                            <line x1="-110" y1="0" x2="110" y2="0" stroke="#333" stroke-width="2" marker-end="url(#arrow-x)" />
+                            <line x1="0" y1="110" x2="0" y2="-110" stroke="#333" stroke-width="2" marker-end="url(#arrow-y)" />
+                            <text x="105" y="-10" font-family="sans-serif" font-size="12" font-style="italic" font-weight="bold">x</text>
+                            <text x="10" y="-105" font-family="sans-serif" font-size="12" font-style="italic" font-weight="bold">y</text>
+                            <text x="-12" y="15" font-family="sans-serif" font-size="12" font-style="italic">O</text>
+                            <text x="50" y="-50" font-family="sans-serif" font-size="16" font-weight="bold" fill="#0056b3" text-anchor="middle">象限 I (+, +)</text>
+                            <text x="-50" y="-50" font-family="sans-serif" font-size="16" font-weight="bold" fill="#dc3545" text-anchor="middle">象限 II (-, +)</text>
+                            <text x="-50" y="50" font-family="sans-serif" font-size="16" font-weight="bold" fill="#28a745" text-anchor="middle">象限 III (-, -)</text>
+                            <text x="50" y="50" font-family="sans-serif" font-size="16" font-weight="bold" fill="#ff8c00" text-anchor="middle">象限 IV (+, -)</text>
+                            <defs>
+                                <marker id="arrow-x" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0,0 6,3 0,6" fill="#333" /></marker>
+                                <marker id="arrow-y" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><polygon points="0,0 6,3 0,6" fill="#333" /></marker>
+                            </defs>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>3-4. 水平與鉛垂線、兩點之間的距離</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px;">
+                    
+                    <div class="example-box" style="margin: 0; border-left-color: #0056b3;">
+                        <h4 style="margin-top:0; color: #0056b3;">水平線 (Horizontal Line)</h4>
+                        <p>線上所有點的 <strong>$y$ 坐標（高度）都相同</strong>。<br>例如 $A(-2, \mathbf{3})$ 和 $B(4, \mathbf{3})$。</p>
+                        <p><strong>求距離 (長度)：</strong> 只需看 $x$ 坐標。<br>
+                        <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px;">右減左 (大減細)</span></p>
+                        <p>$$ AB \text{ 長度} = 4 - (-2) = \mathbf{6} $$</p>
+                        <svg viewBox="-50 -20 150 80" width="100%" style="background: #fff; border: 1px solid #ddd; max-height: 80px;">
+                            <line x1="-30" y1="40" x2="100" y2="40" stroke="#0056b3" stroke-width="3" />
+                            <circle cx="-10" cy="40" r="4" fill="#dc3545" /><text x="-25" y="30" font-family="sans-serif" font-size="12">A(-2, 3)</text>
+                            <circle cx="80" cy="40" r="4" fill="#dc3545" /><text x="65" y="30" font-family="sans-serif" font-size="12">B(4, 3)</text>
+                        </svg>
+                    </div>
+
+                    <div class="example-box" style="margin: 0; border-left-color: #28a745;">
+                        <h4 style="margin-top:0; color: #28a745;">鉛垂線 (Vertical Line)</h4>
+                        <p>線上所有點的 <strong>$x$ 坐標（左右位置）都相同</strong>。<br>例如 $C(\mathbf{-1}, 5)$ 和 $D(\mathbf{-1}, -2)$。</p>
+                        <p><strong>求距離 (長度)：</strong> 只需看 $y$ 坐標。<br>
+                        <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px;">上減下 (大減細)</span></p>
+                        <p>$$ CD \text{ 長度} = 5 - (-2) = \mathbf{7} $$</p>
+                        <svg viewBox="-20 -20 100 120" width="100%" style="background: #fff; border: 1px solid #ddd; max-height: 120px;">
+                            <line x1="40" y1="0" x2="40" y2="90" stroke="#28a745" stroke-width="3" />
+                            <circle cx="40" cy="15" r="4" fill="#dc3545" /><text x="50" y="20" font-family="sans-serif" font-size="12">C(-1, 5)</text>
+                            <circle cx="40" cy="75" r="4" fill="#dc3545" /><text x="50" y="80" font-family="sans-serif" font-size="12">D(-1, -2)</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>5. 在坐標圖上的面積 (Area on Coordinate Plane)</h2>
+                <p>求坐標圖上多邊形的面積，我們必須自己畫線，利用<strong>分割法</strong>或<strong>填補法</strong>，將其變成我們懂計的長方形或直角三角形。</p>
+                
+                <div style="display: flex; flex-wrap: wrap; gap: 20px;">
+                    <div class="example-box" style="flex: 1; min-width: 250px; border-left-color: #ffc107;">
+                        <strong>時機一：圖形有一條水平或鉛垂邊</strong><br>
+                        👉 <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px;">直接代公式 或 使用分割法</span><br>
+                        直接將該邊作為「底」，然後找對面的頂點畫垂直線找出「高」。
+                        <svg viewBox="-20 -20 160 120" width="100%" style="background: #fff; border: 1px solid #ddd; margin-top: 10px; max-height: 100px;">
+                            <polygon points="20,80 120,80 70,20" fill="#fff3cd" stroke="#ffc107" stroke-width="2" />
+                            <line x1="70" y1="20" x2="70" y2="80" stroke="#dc3545" stroke-width="2" stroke-dasharray="4" />
+                            <text x="60" y="95" font-family="sans-serif" font-size="12" font-weight="bold">底 (水平線)</text>
+                            <text x="75" y="55" font-family="sans-serif" font-size="12" font-weight="bold" fill="#dc3545">高</text>
+                        </svg>
+                    </div>
+
+                    <div class="example-box" style="flex: 1; min-width: 250px; border-left-color: #dc3545;">
+                        <strong>時機二：所有邊都是斜線 (無直路)</strong><br>
+                        👉 <span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px;">強烈建議使用填補法 (畫外框)</span><br>
+                        畫一個大長方形剛好包住該圖形，然後用大長方形面積，減去周圍多出來的直角三角形。
+                        <svg viewBox="-20 -20 160 120" width="100%" style="background: #fff; border: 1px solid #ddd; margin-top: 10px; max-height: 100px;">
+                            <rect x="20" y="20" width="100" height="80" fill="#f8f9fa" stroke="#dc3545" stroke-width="2" stroke-dasharray="4" />
+                            <polygon points="20,70 90,100 120,20" fill="#f8d7da" stroke="#dc3545" stroke-width="2" />
+                            <text x="30" y="95" font-family="sans-serif" font-size="14" fill="#0056b3">-</text>
+                            <text x="50" y="45" font-family="sans-serif" font-size="14" fill="#0056b3">-</text>
+                            <text x="110" y="75" font-family="sans-serif" font-size="14" fill="#0056b3">-</text>
+                        </svg>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>6. 坐標變換 (Transformations)</h2>
+                
+                <h3>6.1 平移 (Translation)</h3>
+                <table class="math-table">
+                    <tr><th>方向</th><th>坐標變化</th><th>例子：點 $(2, 5)$ 平移 $3$ 單位</th></tr>
+                    <tr><td>向右 (Right)</td><td>$x$ 坐標 $+k$</td><td>$(2+3, 5) \rightarrow \mathbf{(5, 5)}$</td></tr>
+                    <tr><td>向左 (Left)</td><td>$x$ 坐標 $-k$</td><td>$(2-3, 5) \rightarrow \mathbf{(-1, 5)}$</td></tr>
+                    <tr><td>向上 (Up)</td><td>$y$ 坐標 $+k$</td><td>$(2, 5+3) \rightarrow \mathbf{(2, 8)}$</td></tr>
+                    <tr><td>向下 (Down)</td><td>$y$ 坐標 $-k$</td><td>$(2, 5-3) \rightarrow \mathbf{(2, 2)}$</td></tr>
+                </table>
+
+                <h3 style="margin-top: 25px;">6.2 反射 (Reflection)</h3>
+                <p>記住口訣：<span style="background-color: #ffeb3b; padding: 2px 4px; font-weight: bold; border-radius: 3px;">沿著哪條軸，那個字母就不變，另一個字母變負號。</span></p>
+                <ul>
+                    <li><strong>沿 $x$ 軸反射 (上下反)：</strong> $x$ 不變，$y$ 變號。 $(x, y) \rightarrow (x, -y)$</li>
+                    <li><strong>沿 $y$ 軸反射 (左右反)：</strong> $y$ 不變，$x$ 變號。 $(x, y) \rightarrow (-x, y)$</li>
+                </ul>
+
+                <h3 style="margin-top: 25px;">6.3 繞原點 $O(0,0)$ 旋轉 (Rotation)</h3>
+                <div class="example-box" style="border-left-color: #0056b3;">
+                    <strong>🔥 必殺技：兩步拆解法</strong><br>
+                    第一步：決定數字位置。<br>
+                    如果是 $90^\circ$ 或 $270^\circ$，<span style="text-decoration: underline;">$x$ 和 $y$ 的數字互換位置</span>。<br>
+                    如果是 $180^\circ$，<span style="text-decoration: underline;">數字位置不變</span>。<br>
+                    第二步：根據旋轉後到達的「新象限」，決定正負號。
+                </div>
+                
+                <table class="math-table">
+                    <tr><th>旋轉角度</th><th>結果公式</th><th>例子：點 $(3, 4)$</th></tr>
+                    <tr><td>順時針 $90^\circ$</td><td>$(y, -x)$</td><td>位置互換變 $(4, 3)$，到了第四象限，所以 $y$ 是負 $\rightarrow \mathbf{(4, -3)}$</td></tr>
+                    <tr><td>逆時針 $90^\circ$</td><td>$(-y, x)$</td><td>位置互換變 $(4, 3)$，到了第二象限，所以 $x$ 是負 $\rightarrow \mathbf{(-4, 3)}$</td></tr>
+                    <tr><td>$180^\circ$ (不用分順逆)</td><td>$(-x, -y)$</td><td>位置不變，到了第三象限，兩者全變負 $\rightarrow \mathbf{(-3, -4)}$</td></tr>
+                </table>
+
+                <h3 style="margin-top: 25px;">6.4 💡增潤：沿一直線反射 (Reflection across a line)</h3>
+                <p>有時候題目不是沿 $x$ 或 $y$ 軸反射，而是沿一條例如 $x=2$ 這樣的直線反射。不用死記公式，用<strong>「數格子距離」</strong>的觀念最安全！</p>
+                <div class="example-box" style="background-color: #fff3cd; border-left-color: #ffc107;">
+                    <strong>例子：將點 $P(-2, 3)$ 沿直線 $x=1$ 反射。</strong><br><br>
+                    1. 畫草圖：$P$ 點的 $x$ 坐標是 $-2$，而鏡子（反射線）在 $x=1$ 的位置。<br>
+                    2. 計算距離：從 $x=-2$ 走到鏡子 $x=1$，向右走了 $3$ 步。 $\quad [1 - (-2) = 3]$<br>
+                    3. 穿過鏡子：從鏡子 $x=1$ 繼續向右走相同的 $3$ 步。<br>
+                    4. 新坐標：$1 + 3 = 4$。高度（$y$ 坐標）全程不變。<br>
+                    結果：新點 $P'$ 的坐標是 <strong>$(4, 3)$</strong>。
+                </div>
+            </div>
+        </div>
+
+        <div id="topic-vocab" class="tab-content">
+            
+            <div class="example-box" style="border-left: 6px solid #0056b3; background-color: #e0f2fe; margin-bottom: 25px; text-align: center;">
+                <h2 style="color: #0056b3; margin-top: 0;">🎮 數學英文詞彙配對遊戲</h2>
+                <p style="margin: 5px 0 0 0; color: #333; line-height: 1.5;">
+                    請找出意思相符的中英文詞語！先點擊一邊的卡片，再點擊另一邊對應的卡片。<br>
+                    全對才能過關喔！💪
+                </p>
+                <button onclick="initMatchingGame()" style="margin-top: 15px; padding: 8px 20px; background-color: #0056b3; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold;">🔄 重新洗牌</button>
+            </div>
+
+            <style>
+                .game-board {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 20px;
+                    max-width: 700px;
+                    margin: 0 auto;
+                }
+                .card-column {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+                .match-card {
+                    padding: 15px 10px;
+                    text-align: center;
+                    background-color: #fff;
+                    border: 2px solid #ddd;
+                    border-radius: 8px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    user-select: none;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                }
+                .match-card:hover {
+                    background-color: #f8f9fa;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                }
+                /* 選取狀態 (螢光黃) */
+                .match-card.selected {
+                    background-color: #fff3cd;
+                    border-color: #ffc107;
+                    transform: scale(1.02);
+                }
+                /* 答對狀態 (綠色) */
+                .match-card.matched {
+                    background-color: #d4edda;
+                    border-color: #28a745;
+                    color: #155724;
+                    cursor: default;
+                    pointer-events: none;
+                    opacity: 0.8;
+                }
+                /* 答錯狀態 (紅色震動) */
+                .match-card.error {
+                    background-color: #f8d7da;
+                    border-color: #dc3545;
+                    color: #721c24;
+                    animation: shake 0.4s;
+                }
+                
+                @keyframes shake {
+                    0% { transform: translateX(0); }
+                    25% { transform: translateX(-5px); }
+                    50% { transform: translateX(5px); }
+                    75% { transform: translateX(-5px); }
+                    100% { transform: translateX(0); }
+                }
+
+                #victory-message {
+                    display: none;
+                    text-align: center;
+                    margin-top: 25px;
+                    padding: 20px;
+                    background-color: #d4edda;
+                    border: 2px solid #28a745;
+                    border-radius: 8px;
+                    color: #155724;
+                }
+            </style>
+
+            <div class="game-board">
+                <div id="en-column" class="card-column"></div>
+                <div id="zh-column" class="card-column"></div>
+            </div>
+
+            <div id="victory-message">
+                <h2>🎉 太厲害了！你已成功配對所有詞彙！ 🎉</h2>
+                <p>你的英文數學基礎非常扎實！</p>
+            </div>
+
+            <script>
+                const vocabData = [
+                    { id: 1, en: "solve", zh: "解" },
+                    { id: 2, en: "simplify", zh: "化簡" },
+                    { id: 3, en: "round down", zh: "下捨入" },
+                    { id: 4, en: "round up", zh: "上捨入" },
+                    { id: 5, en: "triangle", zh: "三角形" },
+                    { id: 6, en: "Parallel lines", zh: "平行線" },
+                    { id: 7, en: "area", zh: "面積" },
+                    { id: 8, en: "volume", zh: "體積" },
+                    { id: 9, en: "coordinates", zh: "坐標" },
+                    { id: 10, en: "rotation", zh: "旋轉" }
+                ];
+
+                let firstSelection = null;
+                let isChecking = false;
+                let matchedPairs = 0;
+
+                // 打亂陣列的函數 (Fisher-Yates Shuffle)
+                function shuffleArray(array) {
+                    let newArray = [...array];
+                    for (let i = newArray.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+                    }
+                    return newArray;
+                }
+
+                // 點擊卡片的處理邏輯
+                function handleCardClick(card, id, type) {
+                    if (isChecking || card.classList.contains('matched') || card.classList.contains('selected')) {
+                        return; // 如果正在檢查、已配對、或已選取，則不反應
+                    }
+
+                    card.classList.add('selected');
+
+                    if (!firstSelection) {
+                        // 這是點擊的第一張卡片
+                        firstSelection = { card, id, type };
+                    } else {
+                        // 這是點擊的第二張卡片
+                        // 防止玩家連續點擊同一邊的卡片 (例如點了兩個英文)
+                        if (firstSelection.type === type) {
+                            firstSelection.card.classList.remove('selected');
+                            firstSelection = { card, id, type };
+                            return;
+                        }
+
+                        isChecking = true;
+                        
+                        // 檢查是否配對成功
+                        if (firstSelection.id === id) {
+                            // 答對了！
+                            setTimeout(() => {
+                                firstSelection.card.classList.remove('selected');
+                                firstSelection.card.classList.add('matched');
+                                card.classList.remove('selected');
+                                card.classList.add('matched');
+                                
+                                matchedPairs++;
+                                firstSelection = null;
+                                isChecking = false;
+
+                                // 檢查是否全部完成
+                                if (matchedPairs === vocabData.length) {
+                                    document.getElementById('victory-message').style.display = 'block';
+                                }
+                            }, 300);
+                        } else {
+                            // 答錯了！
+                            card.classList.add('error');
+                            firstSelection.card.classList.add('error');
+                            
+                            setTimeout(() => {
+                                card.classList.remove('selected', 'error');
+                                firstSelection.card.classList.remove('selected', 'error');
+                                firstSelection = null;
+                                isChecking = false;
+                            }, 800); // 震動並顯示錯誤 0.8 秒後恢復
+                        }
+                    }
+                }
+
+                // 初始化/重置遊戲
+                function initMatchingGame() {
+                    const enColumn = document.getElementById('en-column');
+                    const zhColumn = document.getElementById('zh-column');
+                    document.getElementById('victory-message').style.display = 'none';
+                    
+                    enColumn.innerHTML = '';
+                    zhColumn.innerHTML = '';
+                    
+                    firstSelection = null;
+                    isChecking = false;
+                    matchedPairs = 0;
+
+                    // 分別打亂英文和中文的順序
+                    const shuffledEn = shuffleArray(vocabData);
+                    const shuffledZh = shuffleArray(vocabData);
+
+                    // 產生英文卡片
+                    shuffledEn.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'match-card';
+                        div.textContent = item.en;
+                        div.onclick = () => handleCardClick(div, item.id, 'en');
+                        enColumn.appendChild(div);
+                    });
+
+                    // 產生中文卡片
+                    shuffledZh.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'match-card';
+                        div.textContent = item.zh;
+                        div.onclick = () => handleCardClick(div, item.id, 'zh');
+                        zhColumn.appendChild(div);
+                    });
+                }
+
+                // 確保切換到此分頁時，如果遊戲還沒載入就載入一次
+                // (延遲一小段時間確保 DOM 準備好)
+                setTimeout(() => {
+                    initMatchingGame();
+                }, 500);
+
+            </script>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>&copy; 2026 中一數學温習網 - 祝你考試順利！</p>
+    </footer>
+
+    <script>
+        function switchTab(tabId) {
+            // 隱藏所有分頁內容
+            const contents = document.querySelectorAll('.tab-content');
+            contents.forEach(content => content.classList.remove('active'));
+            
+            // 取消所有按鈕的 active 狀態
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            
+            // 顯示點選的分頁與激活對應按鈕
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+    </script>
+
+</body>
+</html>
