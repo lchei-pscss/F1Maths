@@ -15,7 +15,7 @@
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js"></script>
     
-    <style>
+  <style>
         :root {
             --primary-color: #0056b3;
             --secondary-color: #f8f9fa;
@@ -55,8 +55,7 @@
         .tab-btn {
             background: none;
             border: none;
-            color: #rgba(255,255,255,0.7);
-            color: #b8c2cc;
+            color: rgba(255,255,255,0.7); /* 💡 已修正：移除了 # 號 */
             font-size: 1.1rem;
             font-weight: bold;
             padding: 10px 20px;
@@ -138,32 +137,32 @@
         table.math-table th {
             background-color: #f1f1f1;
         }
+
+        /* 💡 已修正：整合並理順了整個 @media print 區塊的所有大括號 */
         @media print {
-   		 /* 隱藏網頁上的導覽列、按鈕等不需要列印的 UI */
-    		.nav-tabs, .export-pdf-btn, header, footer {
-    		    display: none !important;
-   		 }
+            /* 隱藏網頁上的導覽列、按鈕等不需要列印的 UI */
+            .nav-tabs, .export-pdf-btn, header, footer {
+                display: none !important;
+            }
 
-   		 /* 強制將「所有分頁內容」通通顯示出來 */
-    		.tab-content {
-     		   display: block !important;
-    		    opacity: 1 !important;
-     		   visibility: visible !important;
-     		   padding: 0 !important;
-      		  margin-bottom: 40px; 
-       		 page-break-after: auto;
-   		 }
+            /* 強制將「所有分頁內容」通通顯示出來 */
+            .tab-content {
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                padding: 0 !important;
+                margin-bottom: 40px; 
+                page-break-after: auto;
+            }
 
-   		 /* 讓每個大課題自動從新的一頁開始 */
-    		.tab-content h2 {
-    		    page-break-before: always;
-     		   padding-top: 20px;
-    		}
-    		.tab-content:first-of-type h2 {
-    		    page-break-before: avoid;
-    		}
-
-	}
+            /* 讓每個大課題自動從新的一頁開始 */
+            .tab-content h2 {
+                page-break-before: always;
+                padding-top: 20px;
+            }
+            .tab-content:first-of-type h2 {
+                page-break-before: avoid;
+            }
 
             /* 防止框框在分頁時被切斷 */
             .example-box, .formula-box, .dse-tip {
@@ -182,18 +181,20 @@
 
         /* 匯出 PDF 按鈕的外觀設計 */
         .export-pdf-btn {
-            background-color: #e74c3c !important; 
+            background-color: #e74c3c !important;
             color: white !important;
             font-weight: bold;
             margin-top: 20px !important;
-            padding: 10px 15px;
+            padding: 10px 20px;
             border-radius: 5px;
             border: none;
             cursor: pointer;
             transition: 0.3s;
+            font-size: 1rem;
         }
         .export-pdf-btn:hover {
             background-color: #c0392b !important;
+            transform: scale(1.05);
         }
     </style>
 </head>
