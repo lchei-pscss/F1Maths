@@ -157,6 +157,7 @@
         <button class="tab-btn" onclick="switchTab('topic7')">課題七：與直線和三角形相關的角</button>
         <button class="tab-btn" onclick="switchTab('topic8')">課題八：面積與體積(一)</button>
         <button class="tab-btn" onclick="switchTab('topic9')">課題九：坐標簡介</button>
+        <button class="tab-btn" onclick="switchTab('topic-vocab')">英文詞語温習：配對遊戲</button>
     </div>
 
     <div class="container">
@@ -1438,6 +1439,230 @@
                     結果：新點 $P'$ 的坐標是 <strong>$(4, 3)$</strong>。
                 </div>
             </div>
+        </div>
+
+        <div id="topic-vocab" class="tab-content">
+            
+            <div class="example-box" style="border-left: 6px solid #0056b3; background-color: #e0f2fe; margin-bottom: 25px; text-align: center;">
+                <h2 style="color: #0056b3; margin-top: 0;">🎮 數學英文詞彙配對遊戲</h2>
+                <p style="margin: 5px 0 0 0; color: #333; line-height: 1.5;">
+                    請找出意思相符的中英文詞語！先點擊一邊的卡片，再點擊另一邊對應的卡片。<br>
+                    全對才能過關喔！💪
+                </p>
+                <button onclick="initMatchingGame()" style="margin-top: 15px; padding: 8px 20px; background-color: #0056b3; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; font-weight: bold;">🔄 重新洗牌</button>
+            </div>
+
+            <style>
+                .game-board {
+                    display: flex;
+                    justify-content: space-between;
+                    gap: 20px;
+                    max-width: 700px;
+                    margin: 0 auto;
+                }
+                .card-column {
+                    flex: 1;
+                    display: flex;
+                    flex-direction: column;
+                    gap: 10px;
+                }
+                .match-card {
+                    padding: 15px 10px;
+                    text-align: center;
+                    background-color: #fff;
+                    border: 2px solid #ddd;
+                    border-radius: 8px;
+                    font-size: 18px;
+                    font-weight: bold;
+                    cursor: pointer;
+                    transition: all 0.2s ease;
+                    user-select: none;
+                    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+                }
+                .match-card:hover {
+                    background-color: #f8f9fa;
+                    transform: translateY(-2px);
+                    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+                }
+                /* 選取狀態 (螢光黃) */
+                .match-card.selected {
+                    background-color: #fff3cd;
+                    border-color: #ffc107;
+                    transform: scale(1.02);
+                }
+                /* 答對狀態 (綠色) */
+                .match-card.matched {
+                    background-color: #d4edda;
+                    border-color: #28a745;
+                    color: #155724;
+                    cursor: default;
+                    pointer-events: none;
+                    opacity: 0.8;
+                }
+                /* 答錯狀態 (紅色震動) */
+                .match-card.error {
+                    background-color: #f8d7da;
+                    border-color: #dc3545;
+                    color: #721c24;
+                    animation: shake 0.4s;
+                }
+                
+                @keyframes shake {
+                    0% { transform: translateX(0); }
+                    25% { transform: translateX(-5px); }
+                    50% { transform: translateX(5px); }
+                    75% { transform: translateX(-5px); }
+                    100% { transform: translateX(0); }
+                }
+
+                #victory-message {
+                    display: none;
+                    text-align: center;
+                    margin-top: 25px;
+                    padding: 20px;
+                    background-color: #d4edda;
+                    border: 2px solid #28a745;
+                    border-radius: 8px;
+                    color: #155724;
+                }
+            </style>
+
+            <div class="game-board">
+                <div id="en-column" class="card-column"></div>
+                <div id="zh-column" class="card-column"></div>
+            </div>
+
+            <div id="victory-message">
+                <h2>🎉 太厲害了！你已成功配對所有詞彙！ 🎉</h2>
+                <p>你的英文數學基礎非常扎實！</p>
+            </div>
+
+            <script>
+                const vocabData = [
+                    { id: 1, en: "solve", zh: "解" },
+                    { id: 2, en: "simplify", zh: "化簡" },
+                    { id: 3, en: "round down", zh: "下捨入" },
+                    { id: 4, en: "round up", zh: "上捨入" },
+                    { id: 5, en: "triangle", zh: "三角形" },
+                    { id: 6, en: "Parallel lines", zh: "平行線" },
+                    { id: 7, en: "area", zh: "面積" },
+                    { id: 8, en: "volume", zh: "體積" },
+                    { id: 9, en: "coordinates", zh: "坐標" },
+                    { id: 10, en: "rotation", zh: "旋轉" }
+                ];
+
+                let firstSelection = null;
+                let isChecking = false;
+                let matchedPairs = 0;
+
+                // 打亂陣列的函數 (Fisher-Yates Shuffle)
+                function shuffleArray(array) {
+                    let newArray = [...array];
+                    for (let i = newArray.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+                    }
+                    return newArray;
+                }
+
+                // 點擊卡片的處理邏輯
+                function handleCardClick(card, id, type) {
+                    if (isChecking || card.classList.contains('matched') || card.classList.contains('selected')) {
+                        return; // 如果正在檢查、已配對、或已選取，則不反應
+                    }
+
+                    card.classList.add('selected');
+
+                    if (!firstSelection) {
+                        // 這是點擊的第一張卡片
+                        firstSelection = { card, id, type };
+                    } else {
+                        // 這是點擊的第二張卡片
+                        // 防止玩家連續點擊同一邊的卡片 (例如點了兩個英文)
+                        if (firstSelection.type === type) {
+                            firstSelection.card.classList.remove('selected');
+                            firstSelection = { card, id, type };
+                            return;
+                        }
+
+                        isChecking = true;
+                        
+                        // 檢查是否配對成功
+                        if (firstSelection.id === id) {
+                            // 答對了！
+                            setTimeout(() => {
+                                firstSelection.card.classList.remove('selected');
+                                firstSelection.card.classList.add('matched');
+                                card.classList.remove('selected');
+                                card.classList.add('matched');
+                                
+                                matchedPairs++;
+                                firstSelection = null;
+                                isChecking = false;
+
+                                // 檢查是否全部完成
+                                if (matchedPairs === vocabData.length) {
+                                    document.getElementById('victory-message').style.display = 'block';
+                                }
+                            }, 300);
+                        } else {
+                            // 答錯了！
+                            card.classList.add('error');
+                            firstSelection.card.classList.add('error');
+                            
+                            setTimeout(() => {
+                                card.classList.remove('selected', 'error');
+                                firstSelection.card.classList.remove('selected', 'error');
+                                firstSelection = null;
+                                isChecking = false;
+                            }, 800); // 震動並顯示錯誤 0.8 秒後恢復
+                        }
+                    }
+                }
+
+                // 初始化/重置遊戲
+                function initMatchingGame() {
+                    const enColumn = document.getElementById('en-column');
+                    const zhColumn = document.getElementById('zh-column');
+                    document.getElementById('victory-message').style.display = 'none';
+                    
+                    enColumn.innerHTML = '';
+                    zhColumn.innerHTML = '';
+                    
+                    firstSelection = null;
+                    isChecking = false;
+                    matchedPairs = 0;
+
+                    // 分別打亂英文和中文的順序
+                    const shuffledEn = shuffleArray(vocabData);
+                    const shuffledZh = shuffleArray(vocabData);
+
+                    // 產生英文卡片
+                    shuffledEn.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'match-card';
+                        div.textContent = item.en;
+                        div.onclick = () => handleCardClick(div, item.id, 'en');
+                        enColumn.appendChild(div);
+                    });
+
+                    // 產生中文卡片
+                    shuffledZh.forEach(item => {
+                        const div = document.createElement('div');
+                        div.className = 'match-card';
+                        div.textContent = item.zh;
+                        div.onclick = () => handleCardClick(div, item.id, 'zh');
+                        zhColumn.appendChild(div);
+                    });
+                }
+
+                // 確保切換到此分頁時，如果遊戲還沒載入就載入一次
+                // (延遲一小段時間確保 DOM 準備好)
+                setTimeout(() => {
+                    initMatchingGame();
+                }, 500);
+
+            </script>
         </div>
 
     </div>
