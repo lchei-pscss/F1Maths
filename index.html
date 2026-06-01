@@ -138,6 +138,61 @@
         table.math-table th {
             background-color: #f1f1f1;
         }
+                @media print {
+            /* 隱藏網頁上的導覽列、按鈕等不需要列印的 UI */
+            .tab, .export-pdf-btn, header, footer {
+                display: none !important;
+            }
+
+            /* 強制將「所有分頁內容」通通顯示出來 */
+            .tabcontent {
+                display: block !important;
+                opacity: 1 !important;
+                visibility: visible !important;
+                padding: 0 !important;
+                margin-bottom: 40px; 
+                page-break-after: auto; 
+            }
+
+            /* 讓每個大課題自動從新的一頁開始 */
+            .tabcontent h2 {
+                page-break-before: always;
+                padding-top: 20px;
+            }
+            .tabcontent:first-of-type h2 {
+                page-break-before: avoid;
+            }
+
+            /* 防止框框在分頁時被切斷 */
+            .example-box, .formula-box, .dse-tip {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            /* 強制瀏覽器印出背景顏色 */
+            body {
+                background-color: #ffffff !important;
+                color: #000000 !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+        }
+
+        /* 匯出 PDF 按鈕的外觀設計 */
+        .export-pdf-btn {
+            background-color: #e74c3c !important; 
+            color: white !important;
+            font-weight: bold;
+            margin-top: 20px !important;
+            padding: 10px 15px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .export-pdf-btn:hover {
+            background-color: #c0392b !important;
+        }
     </style>
 </head>
 <body>
@@ -1685,6 +1740,18 @@
             document.getElementById(tabId).classList.add('active');
             event.currentTarget.classList.add('active');
         }
+
+        function exportAllToPDF() {
+            // 彈出提示，引導學生如何儲存
+            alert("即將為您整合所有課題。\n請在彈出的列印視窗中，將「目的地 / Destination」選擇為「另存為 PDF / Save as PDF」，然後點擊儲存即可！");
+    
+            // 觸發瀏覽器的列印與 PDF 儲存引擎
+            window.print();
+        }
+
+        // 網頁載入時預設打開特定分頁 (方便檢視本次更新)
+        document.getElementById("defaultOpen").click();
+        
     </script>
 
 </body>
